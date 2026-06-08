@@ -54,7 +54,7 @@ import {
 // 统计系统
 import { statisticsManager, StatisticsEventType } from '@/lib/game/statistics/statisticsSystem';
 import { gameSystems } from '@/lib/game/utils/gameSystems';
-import { getAvailableDifficultiesForRealm } from '@/lib/game/utils/generators';
+import { getAvailableDifficultiesForRealm } from '@/lib/data/realmData';
 import { applyGrowthStatChanges, getGrowthStatCap } from '@/lib/game/utils/realmSystem';
 import { consumeGameTime, ACTION_TIME_COST, createCooldown } from '@/lib/game/time/timeSystem';
 import { isNewbie } from '@/lib/game/taskSystem';
