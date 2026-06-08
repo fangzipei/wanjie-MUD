@@ -33,9 +33,8 @@ export const techWorld: WorldMechanics = {
     hasSpecialMechanics: true,
   }),
 
-  /** 科技世界的义体过热机制：连续使用同一模块增加过热风险 */
-  customSuccessRate: (baseRate: number) => {
-    // 科技世界：芯片等级越高，研究效率越高
+  /** 科技世界的芯片研究加成 */
+  customSuccessRate: (baseRate: number, _state?: unknown) => {
     return Math.min(95, baseRate * 1.05);
   },
 

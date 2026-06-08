@@ -81,8 +81,8 @@ export interface WorldMechanics {
   /** 自定义修炼成功率计算（可选，默认使用标准公式） */
   customSuccessRate?: (baseRate: number, state: GameState) => number;
 
-  /** 自定义战斗招式列表（可选） */
-  customCombatActions?: (state: GameState) => BattleAction[];
+  /** 自定义战斗招式列表（可选，基于 ManualBattleState） */
+  customCombatActions?: (state: import('../combat/types').ManualBattleState) => BattleAction[];
 
   /** 自定义自动战斗策略（可选） */
   customAutoStrategy?: (state: ManualBattleState, strategy: AutoBattleStrategy) => BattleAction;
