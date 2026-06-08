@@ -5,9 +5,9 @@
  * 该函数直接导入所有依赖，不通过 barrel 或重导出链。
  */
 
-import type { RealmSystem } from '@/lib/data/realmData';
+import type { RealmSystem } from '@/lib/data/realmCore';
 import type { DungeonConfig } from '@/lib/game/types';
-import { getRealmName, getRealmMultiplier } from '@/lib/data/realmData';
+import { getRealmName, getRealmMultiplier } from '@/lib/data/realmCore';
 import {
   calculateEnemyHp,
   calculateEnemyAttack,

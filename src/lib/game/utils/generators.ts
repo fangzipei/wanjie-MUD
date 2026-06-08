@@ -18,6 +18,9 @@ import {
 } from '../../data/factionData';
 import {
   generateRealmSystem,
+} from '../../data/realmData';
+import type { RealmSystem } from '../../data/realmCore';
+import {
   getRealmName,
   getPowerSystemDescription,
   getRealmMultiplier,
@@ -27,8 +30,7 @@ import {
   getExperienceForLevel,
   getStatBaseForLevel,
   getStatPotentialForLevel,
-} from '../../data/realmData';
-import type { RealmSystem } from '../../data/realmData';
+} from '../../data/realmCore';
 import { getAvailableDifficultiesForRealm } from './adventureDifficulties';
 import {
   WORLD_DATA,

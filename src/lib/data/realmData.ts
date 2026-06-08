@@ -15,7 +15,9 @@ import {
 } from '../game/utils/balanceConfig';
 import { calculateEnemyCombatPower } from '../game/utils/combatPower';
 import { calculateEnemyEnhancement } from '../game/enemy/enemyEnhancement';
-import type { WorldType, DungeonConfig, EnemyTier } from '../game/types';
+import type { WorldType, DungeonConfig } from '../game/types';
+import type { RealmSystem, RealmTier } from './realmCore';
+import { getRealmName, getRealmMultiplier } from './realmCore';
 
 // ============================================
 // 小境界体系（可与任意大境界体系搭配）
@@ -96,20 +98,10 @@ export const MAIN_REALM_SYSTEMS: Record<WorldType, Record<string, string[]>> = {
 };
 
 // ============================================
-// 境界配置接口
+// 境界配置接口 — 从 realmCore 重导出
 // ============================================
 
-export interface RealmTier {
-  name: string;           // 大境界名称
-  subRealms: string[];    // 小境界列表
-  levelRange: [number, number]; // 等级范围 [起始, 结束]
-}
-
-export interface RealmSystem {
-  mainRealmName: string;    // 大境界体系名称
-  subRealmName: string;     // 小境界体系名称
-  tiers: RealmTier[];       // 所有境界层级
-}
+export type { RealmSystem, RealmTier } from './realmCore';
 
 // ============================================
 // 境界系统生成函数
@@ -153,153 +145,6 @@ export function generateRealmSystem(worldType: WorldType): RealmSystem {
     subRealmName,
     tiers,
   };
-}
-
-/**
- * 根据等级获取境界名称
- */
-export function getRealmName(realmSystem: RealmSystem | undefined, level: number): string {
-  // 防护：如果没有 realmSystem，返回默认境界名称
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return `第${level}级`;
-  }
-  
-  // 找到对应的大境界
-  let tierIndex = 0;
-  for (let i = 0; i < realmSystem.tiers.length; i++) {
-    if (level >= realmSystem.tiers[i].levelRange[0] && level <= realmSystem.tiers[i].levelRange[1]) {
-      tierIndex = i;
-      break;
-    }
-    if (level > realmSystem.tiers[i].levelRange[1]) {
-      tierIndex = i + 1;
-    }
-  }
-  
-  // 如果超过最高境界，返回最高境界圆满
-  if (tierIndex >= realmSystem.tiers.length) {
-    tierIndex = realmSystem.tiers.length - 1;
-  }
-  
-  const tier = realmSystem.tiers[tierIndex];
-  const mainRealmName = tier.name;
-  
-  // 计算小境界索引 (0-9)
-  const subRealmIndex = Math.min(9, Math.max(0, level - tier.levelRange[0]));
-  const subRealmName = tier.subRealms[subRealmIndex];
-  
-  // 组合返回完整境界名称
-  return `${mainRealmName}${subRealmName}`;
-}
-
-/**
- * 获取大境界名称（不含小境界）
- */
-export function getMainRealmName(realmSystem: RealmSystem | undefined, level: number): string {
-  // 防护：如果没有 realmSystem，返回默认名称
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return '未知境界';
-  }
-  
-  let tierIndex = 0;
-  for (let i = 0; i < realmSystem.tiers.length; i++) {
-    if (level >= realmSystem.tiers[i].levelRange[0] && level <= realmSystem.tiers[i].levelRange[1]) {
-      tierIndex = i;
-      break;
-    }
-    if (level > realmSystem.tiers[i].levelRange[1]) {
-      tierIndex = i + 1;
-    }
-  }
-  
-  if (tierIndex >= realmSystem.tiers.length) {
-    tierIndex = realmSystem.tiers.length - 1;
-  }
-  
-  return realmSystem.tiers[tierIndex].name;
-}
-
-/**
- * 获取下一个境界
- */
-export function getNextRealm(realmSystem: RealmSystem | undefined, currentLevel: number): string | null {
-  // 防护：如果没有 realmSystem，返回 null
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return null;
-  }
-  
-  const nextLevel = currentLevel + 1;
-  const maxLevel = realmSystem.tiers.length * 10;
-  
-  if (nextLevel > maxLevel) {
-    return null;
-  }
-  
-  return getRealmName(realmSystem, nextLevel);
-}
-
-/**
- * 获取到下一个大境界所需等级
- */
-export function getNextMainRealmLevel(realmSystem: RealmSystem | undefined, currentLevel: number): number | null {
-  // 防护：如果没有 realmSystem，返回 null
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return null;
-  }
-  
-  for (const tier of realmSystem.tiers) {
-    if (currentLevel < tier.levelRange[0]) {
-      return tier.levelRange[0];
-    }
-  }
-  return null;
-}
-
-/**
- * 获取力量体系描述（用于世界面板显示）
- */
-export function getPowerSystemDescription(realmSystem: RealmSystem | undefined): string {
-  // 防护：如果没有 realmSystem，返回默认描述
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return '未知境界体系';
-  }
-  
-  const mainRealms = realmSystem.tiers.map(t => t.name).join(' → ');
-  return mainRealms;
-}
-
-/**
- * 计算战力倍率
- * 每个小境界增加5%，每个大境界跨越额外增加30%
- */
-export function getRealmMultiplier(realmSystem: RealmSystem | undefined, level: number): number {
-  // 防护：如果没有 realmSystem，返回默认倍率
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return 1 + level * 0.05;
-  }
-  
-  let multiplier = 1.0;
-  
-  for (let i = 0; i < realmSystem.tiers.length; i++) {
-    const tier = realmSystem.tiers[i];
-    
-    if (level < tier.levelRange[0]) {
-      break;
-    }
-    
-    // 计算在这个大境界内升了几级
-    const levelsInTier = Math.min(level, tier.levelRange[1]) - tier.levelRange[0] + 1;
-    
-    // 每级增加5%
-    multiplier *= Math.pow(1.05, levelsInTier);
-    
-    // 如果已经超过这个大境界，额外增加30%
-    if (level > tier.levelRange[1] && i < realmSystem.tiers.length - 1) {
-      multiplier *= 1.3;
-    }
-  }
-  
-  return Math.round(multiplier * 100) / 100;
 }
 
 /**
@@ -482,37 +327,18 @@ export function getAvailableDifficultiesForRealm(
   return result;
 }
 
-/**
- * 获取最高等级
- */
-export function getMaxLevel(realmSystem: RealmSystem | undefined): number {
-  // 防护：如果没有 realmSystem，返回默认最大等级
-  if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
-    return 100;
-  }
-  const lastTier = realmSystem.tiers[realmSystem.tiers.length - 1];
-  return lastTier.levelRange[1];
-}
-
-/**
- * 计算升级所需经验值
- */
-export function getExperienceForLevel(level: number): number {
-  const baseExp = 100;
-  const growthFactor = 1.15;
-  return Math.floor(baseExp * Math.pow(growthFactor, level - 1));
-}
-
-/**
- * 计算属性基础上限（基于等级）
- */
-export function getStatBaseForLevel(level: number): number {
-  return 100 + (level - 1) * 6;
-}
-
-/**
- * 计算属性成长潜力上限
- */
-export function getStatPotentialForLevel(level: number): number {
-  return Math.floor(getStatBaseForLevel(level) * 1.2);
-}
+// ============================================
+// 纯函数 — 从 realmCore 重导出
+// ============================================
+export {
+  getRealmName,
+  getMainRealmName,
+  getNextRealm,
+  getNextMainRealmLevel,
+  getPowerSystemDescription,
+  getRealmMultiplier,
+  getMaxLevel,
+  getExperienceForLevel,
+  getStatBaseForLevel,
+  getStatPotentialForLevel,
+} from './realmCore';
