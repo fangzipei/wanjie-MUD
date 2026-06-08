@@ -98,7 +98,7 @@ const ENEMY_MP_MULTIPLIER = 50;
 // 工具函数
 // ============================================
 
-const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const random = (min: number, max: number, rng: () => number = Math.random) => Math.floor(rng() * (max - min + 1)) + min;
 
 /**
  * 根据敌人等级和类型生成品质

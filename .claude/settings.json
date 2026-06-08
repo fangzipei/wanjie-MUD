@@ -11,7 +11,15 @@
       "Bash(pnpm build *)",
       "Bash(xargs wc -l)",
       "Bash(awk '$1 > 500')",
-      "Bash(npx skills *)"
+      "Bash(npx skills *)",
+      "mcp__codegraph__codegraph_explore",
+      "mcp__codegraph__codegraph_search",
+      "mcp__codegraph__codegraph_node",
+      "mcp__codegraph__codegraph_callers",
+      "mcp__codegraph__codegraph_callees",
+      "mcp__codegraph__codegraph_impact",
+      "mcp__codegraph__codegraph_files",
+      "mcp__codegraph__codegraph_status"
     ]
   }
 }

@@ -61,9 +61,11 @@ export type { RealmSystem };
 // ID生成工具
 export const generateId = (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-// 随机数生成工具
-const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-const randomItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+// 随机数生成工具（支持可选 seed-based RNG）
+const random = (min: number, max: number, rng: () => number = Math.random) =>
+  Math.floor(rng() * (max - min + 1)) + min;
+const randomItem = <T>(arr: T[], rng: () => number = Math.random): T =>
+  arr[Math.floor(rng() * arr.length)];
 
 // 姓名生成
 const surnames = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗'];
@@ -301,9 +303,9 @@ export function generateWorld(id: number, ascensionCount: number = 0): World {
 }
 
 // 生成8个世界
-export function generateWorlds(ascensionCount: number = 0): World[] {
+export function generateWorlds(ascensionCount: number = 0, rng: () => number = Math.random): World[] {
   // 打乱世界类型顺序
-  const shuffledTypes = [...worldTypes].sort(() => Math.random() - 0.5);
+  const shuffledTypes = [...worldTypes].sort(() => rng() - 0.5);
   
   return shuffledTypes.map((type, index) => {
     const name = randomItem(worldPrefixes[type]) + randomItem(worldSuffixes[type]);

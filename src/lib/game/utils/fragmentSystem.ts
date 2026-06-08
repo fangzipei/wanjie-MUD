@@ -182,8 +182,8 @@ export { RARITY_ORDER } from '../skill/skillTypes';
 // 工具函数
 // ============================================
 
-function random(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function random(min: number, max: number, rng: () => number = Math.random): number {
+  return Math.floor(rng() * (max - min + 1)) + min;
 }
 
 function generateFragmentId(): string {
@@ -211,7 +211,7 @@ function getMaxDropRarity(enemyLevel: number): ItemRarity {
 }
 
 /** 随机选择稀有度 */
-function rollRarity(maxRarity: ItemRarity, luck: number = 0): ItemRarity {
+function rollRarity(maxRarity: ItemRarity, luck: number = 0, rng: () => number = Math.random): ItemRarity {
   const maxIndex = RARITY_ORDER.indexOf(maxRarity);
   const availableRarities = RARITY_ORDER.slice(0, maxIndex + 1);
   
@@ -226,7 +226,7 @@ function rollRarity(maxRarity: ItemRarity, luck: number = 0): ItemRarity {
     return { rarity, weight, cumulative: totalWeight };
   });
   
-  const roll = Math.random() * totalWeight;
+  const roll = rng() * totalWeight;
   
   for (const { rarity, cumulative } of weights) {
     if (roll <= cumulative) {
@@ -238,9 +238,9 @@ function rollRarity(maxRarity: ItemRarity, luck: number = 0): ItemRarity {
 }
 
 /** 随机选择碎片类型 */
-function rollFragmentType(techniqueWeight: number, equipmentWeight: number): FragmentType {
+function rollFragmentType(techniqueWeight: number, equipmentWeight: number, rng: () => number = Math.random): FragmentType {
   const total = techniqueWeight + equipmentWeight;
-  const roll = Math.random() * total;
+  const roll = rng() * total;
   return roll < techniqueWeight ? 'technique' : 'equipment';
 }
 
@@ -263,7 +263,8 @@ export function generateFragmentDrop(
   enemyTier: EnemyTier,
   luck: number = 0,
   worldType?: WorldType,
-  playerLevel: number = 1
+  playerLevel: number = 1,
+  rng: () => number = Math.random
 ): FragmentDropResult {
   const config = ENEMY_DROP_CONFIG[enemyTier];
   
@@ -283,8 +284,8 @@ export function generateFragmentDrop(
   const completeItems: CompleteItemDropData[] = [];
   
   for (let i = 0; i < count; i++) {
-    const type = rollFragmentType(config.techniqueWeight, config.equipmentWeight);
-    const rarity = rollRarity(finalMaxRarity, luck);
+    const type = rollFragmentType(config.techniqueWeight, config.equipmentWeight, rng);
+    const rarity = rollRarity(finalMaxRarity, luck, rng);
     
     // 生成源物品
     let sourceItem: Technique | Equipment;
@@ -296,7 +297,7 @@ export function generateFragmentDrop(
     
     // 判断是否掉落完整物品
     const completeDropRate = COMPLETE_ITEM_DROP_RATE[rarity];
-    const rollComplete = Math.random();
+    const rollComplete = rng();
     
     if (rollComplete < completeDropRate) {
       // 掉落完整物品
@@ -365,7 +366,8 @@ export function generateFragmentDropFromEnemyItems(
   enemyTechniques: Technique[],
   enemyEquipments: Equipment[],
   enemyTier: EnemyTier,
-  luck: number = 0
+  luck: number = 0,
+  rng: () => number = Math.random
 ): FragmentDropResult {
   const config = ENEMY_DROP_CONFIG[enemyTier];
   
@@ -379,7 +381,7 @@ export function generateFragmentDropFromEnemyItems(
   }
   
   const count = Math.min(random(config.minCount, config.maxCount), allItems.length);
-  const shuffled = [...allItems].sort(() => Math.random() - 0.5);
+  const shuffled = [...allItems].sort(() => rng() - 0.5);
   const selectedItems = shuffled.slice(0, count);
   
   const fragments: FragmentDropData[] = [];
@@ -390,7 +392,7 @@ export function generateFragmentDropFromEnemyItems(
     
     // 判断是否掉落完整物品
     const completeDropRate = COMPLETE_ITEM_DROP_RATE[rarity];
-    const rollComplete = Math.random();
+    const rollComplete = rng();
     
     if (rollComplete < completeDropRate) {
       // 掉落完整物品
