@@ -145,16 +145,19 @@ export function calculateWorldRewardCoefficient(
 
 /**
  * 生成世界危险列表
+ *
+ * @param rng - 随机数生成器（用于确定性生成，默认 Math.random）
  */
 export function generateWorldDangers(
   worldType: WorldType,
-  difficultyCoefficient: number
+  difficultyCoefficient: number,
+  rng: () => number = Math.random
 ): WorldDanger[] {
   // 计算危险数量
   const dangerCount = calculateDangerCount(difficultyCoefficient);
-  
+
   if (dangerCount === 0) return [];
-  
+
   // 筛选符合难度等级的危险
   const maxLevel = getMaxDangerLevel(difficultyCoefficient);
   const availableDangers = WORLD_DANGERS.filter(d => {
@@ -166,30 +169,30 @@ export function generateWorldDangers(
     }
     return true;
   });
-  
+
   if (availableDangers.length === 0) return [];
-  
+
   // 随机选择（高等级危险有更高权重）
   const selectedDangers: WorldDanger[] = [];
   const usedIds = new Set<string>();
-  
+
   for (let i = 0; i < dangerCount && availableDangers.length > 0; i++) {
     // 权重：等级越高权重越大
     const weights = availableDangers
       .filter(d => !usedIds.has(d.id))
       .map(d => d.dangerLevel * d.dangerLevel);
-    
+
     if (weights.length === 0) break;
-    
-    const selectedIndex = weightedRandomIndex(weights);
+
+    const selectedIndex = weightedRandomIndex(weights, rng);
     const danger = availableDangers.filter(d => !usedIds.has(d.id))[selectedIndex];
-    
+
     if (danger) {
       selectedDangers.push(danger);
       usedIds.add(danger.id);
     }
   }
-  
+
   return selectedDangers;
 }
 
@@ -208,7 +211,8 @@ export function generateWorldDangers(
 export function generateWorldOpportunities(
   worldType: WorldType,
   _difficultyCoefficient: number,
-  dangers: WorldDanger[]
+  dangers: WorldDanger[],
+  rng: () => number = Math.random
 ): WorldOpportunity[] {
   // 计算机缘数量
   const opportunityCount = calculateOpportunityCount(_difficultyCoefficient);
@@ -242,7 +246,7 @@ export function generateWorldOpportunities(
     
     if (weights.length === 0) break;
     
-    const selectedIndex = weightedRandomIndex(weights);
+    const selectedIndex = weightedRandomIndex(weights, rng);
     const opportunity = availableOpportunities.filter(o => !usedIds.has(o.id))[selectedIndex];
     
     if (opportunity) {
@@ -304,9 +308,9 @@ export function getNextUnlockInfo(ascensionCount: number): {
 /**
  * 加权随机选择
  */
-function weightedRandomIndex(weights: number[]): number {
+function weightedRandomIndex(weights: number[], rng: () => number = Math.random): number {
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-  let random = Math.random() * totalWeight;
+  let random = rng() * totalWeight;
   
   for (let i = 0; i < weights.length; i++) {
     random -= weights[i];

@@ -1,0 +1,249 @@
+{
+  "id": 0,
+  "name": "鸿蒙界",
+  "type": "修仙",
+  "description": "灵气充沛的修真世界，仙门林立，强者如云",
+  "powerSystem": "引气 → 化灵 → 结丹 → 元神 → 分神 → 合体 → 渡劫 → 大乘 → 飞升 → 真仙",
+  "realmSystem": {
+    "mainRealmName": "仙道飞升",
+    "subRealmName": "初期至大圆满",
+    "tiers": [
+      {
+        "name": "引气",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "化灵",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          11,
+          20
+        ]
+      },
+      {
+        "name": "结丹",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          21,
+          30
+        ]
+      },
+      {
+        "name": "元神",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          31,
+          40
+        ]
+      },
+      {
+        "name": "分神",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          41,
+          50
+        ]
+      },
+      {
+        "name": "合体",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          51,
+          60
+        ]
+      },
+      {
+        "name": "渡劫",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          61,
+          70
+        ]
+      },
+      {
+        "name": "大乘",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          71,
+          80
+        ]
+      },
+      {
+        "name": "飞升",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          81,
+          90
+        ]
+      },
+      {
+        "name": "真仙",
+        "subRealms": [
+          "初期",
+          "初期",
+          "中期",
+          "中期",
+          "后期",
+          "后期",
+          "巅峰",
+          "巅峰",
+          "极限",
+          "大圆满"
+        ],
+        "levelRange": [
+          91,
+          100
+        ]
+      }
+    ]
+  },
+  "majorForces": "五大仙门之丹鼎宗、三大世家之张氏世家与散修联盟",
+  "factions": [
+    {
+      "id": "xian_alchemy_sect",
+      "name": "丹鼎宗",
+      "type": "宗门",
+      "description": "丹道圣地，炼丹术冠绝天下，可炼制各种灵丹妙药。"
+    },
+    {
+      "id": "xian_zhang_family",
+      "name": "张氏世家",
+      "type": "家族",
+      "description": "阵法世家，族中阵法师无数，固若金汤。"
+    },
+    {
+      "id": "xian_free_alliance",
+      "name": "散修联盟",
+      "type": "联盟",
+      "description": "散修聚集之地，虽无强大背景，但胜在自由。"
+    }
+  ],
+  "baseCoefficient": 1.1,
+  "actualCoefficient": 1.1,
+  "difficulty": "普通",
+  "dangers": [],
+  "opportunities": [
+    {
+      "id": "exp_boost_minor",
+      "type": "special_ability",
+      "name": "悟道加护",
+      "description": "修炼速度提升30%",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "specialEffects": {
+          "type": "double_exp",
+          "value": 1.3
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 2
+    }
+  ],
+  "ratingScore": 0
+}

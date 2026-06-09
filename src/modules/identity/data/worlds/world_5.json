@@ -1,0 +1,268 @@
+{
+  "id": 5,
+  "name": "昆仑洞天",
+  "type": "仙侠",
+  "description": "剑仙纵横，御剑乘风，逍遥天地",
+  "powerSystem": "剑徒 → 剑士 → 剑客 → 剑师 → 大剑师 → 剑王 → 剑皇 → 剑帝 → 剑圣 → 剑仙",
+  "realmSystem": {
+    "mainRealmName": "剑道修行",
+    "subRealmName": "一二三四阶",
+    "tiers": [
+      {
+        "name": "剑徒",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "剑士",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          11,
+          20
+        ]
+      },
+      {
+        "name": "剑客",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          21,
+          30
+        ]
+      },
+      {
+        "name": "剑师",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          31,
+          40
+        ]
+      },
+      {
+        "name": "大剑师",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          41,
+          50
+        ]
+      },
+      {
+        "name": "剑王",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          51,
+          60
+        ]
+      },
+      {
+        "name": "剑皇",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          61,
+          70
+        ]
+      },
+      {
+        "name": "剑帝",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          71,
+          80
+        ]
+      },
+      {
+        "name": "剑圣",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          81,
+          90
+        ]
+      },
+      {
+        "name": "剑仙",
+        "subRealms": [
+          "一阶",
+          "二阶",
+          "三阶",
+          "四阶",
+          "五阶",
+          "六阶",
+          "七阶",
+          "八阶",
+          "九阶",
+          "十阶"
+        ],
+        "levelRange": [
+          91,
+          100
+        ]
+      }
+    ]
+  },
+  "majorForces": "剑仙门派之云霄剑宗、仙丹宗与散修联盟",
+  "factions": [
+    {
+      "id": "xianxia_cloud_sect",
+      "name": "云霄剑宗",
+      "type": "宗门",
+      "description": "云雾缭绕的剑修圣地，剑法飘逸。"
+    },
+    {
+      "id": "xianxia_dan_sect",
+      "name": "仙丹宗",
+      "type": "宗门",
+      "description": "丹道圣地，可炼制各种仙丹灵药。"
+    },
+    {
+      "id": "xianxia_free",
+      "name": "散修联盟",
+      "type": "联盟",
+      "description": "散修聚集之地，互通有无。"
+    }
+  ],
+  "baseCoefficient": 1.3,
+  "actualCoefficient": 1.3,
+  "difficulty": "困难",
+  "dangers": [
+    {
+      "id": "weak_enemies",
+      "type": "enemy_buff",
+      "name": "敌强我弱",
+      "description": "此地敌人实力略胜一筹",
+      "triggerCondition": {
+        "type": "on_battle_start",
+        "chance": 1
+      },
+      "effect": {
+        "enemyBuffs": {
+          "attackBonus": 0.1,
+          "defenseBonus": 0.1
+        }
+      },
+      "duration": 0,
+      "dispellable": false,
+      "dangerLevel": 2
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "treasure_vein",
+      "type": "resource_gain",
+      "name": "灵脉矿藏",
+      "description": "发现灵脉，每次探索额外获得灵石",
+      "triggerCondition": {
+        "type": "on_explore",
+        "chance": 0.35
+      },
+      "effect": {
+        "resourceGains": {
+          "spiritStones": 80
+        }
+      },
+      "duration": 0,
+      "opportunityLevel": 2
+    }
+  ],
+  "ratingScore": 0
+}

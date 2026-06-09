@@ -24,8 +24,12 @@ export {
 export type { TraitDefinition } from './logic/traits';
 
 // —— 世界生成 ——
+export { generateWorld, generateWorlds, generateBackstory, DEFAULT_WORLD_SEEDS } from './logic/generators';
 export { getWorldMechanics, hasUniqueMechanics } from './logic/worlds/factory';
 export type { WorldMechanics } from './logic/worlds/types';
+
+// —— 已生成的世界数据（永久持久化） ——
+export { AVAILABLE_WORLDS } from './data/worlds';
 
 // —— 世界数据 ——
 export { WORLD_DATA, WORLD_COEFFICIENTS } from './data/worldData';

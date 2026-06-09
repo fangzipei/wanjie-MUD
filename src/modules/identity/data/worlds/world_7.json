@@ -1,0 +1,293 @@
+{
+  "id": 7,
+  "name": "废土之地",
+  "type": "末世",
+  "description": "末日生存，弱肉强食是唯一法则",
+  "powerSystem": "幸存者 → 觉醒者 → 进化者 → 异能者 → 变异者 → 超凡者 → 主宰者 → 统治者 → 王者 → 皇者",
+  "realmSystem": {
+    "mainRealmName": "生存进化",
+    "subRealmName": "品级",
+    "tiers": [
+      {
+        "name": "幸存者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "觉醒者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          11,
+          20
+        ]
+      },
+      {
+        "name": "进化者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          21,
+          30
+        ]
+      },
+      {
+        "name": "异能者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          31,
+          40
+        ]
+      },
+      {
+        "name": "变异者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          41,
+          50
+        ]
+      },
+      {
+        "name": "超凡者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          51,
+          60
+        ]
+      },
+      {
+        "name": "主宰者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          61,
+          70
+        ]
+      },
+      {
+        "name": "统治者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          71,
+          80
+        ]
+      },
+      {
+        "name": "王者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          81,
+          90
+        ]
+      },
+      {
+        "name": "皇者",
+        "subRealms": [
+          "九品",
+          "八品",
+          "七品",
+          "六品",
+          "五品",
+          "四品",
+          "三品",
+          "二品",
+          "一品",
+          "极品"
+        ],
+        "levelRange": [
+          91,
+          100
+        ]
+      }
+    ]
+  },
+  "majorForces": "幸存者联盟、避难所联盟、进化者联盟与掠夺者联盟",
+  "factions": [
+    {
+      "id": "apocalypse_survivor",
+      "name": "幸存者联盟",
+      "type": "联盟",
+      "description": "废土上最大的人类幸存者组织，拥有多个基地。"
+    },
+    {
+      "id": "apocalypse_vault",
+      "name": "避难所联盟",
+      "type": "联盟",
+      "description": "战前避难所的联合体，科技实力强大。"
+    },
+    {
+      "id": "apocalypse_mutant",
+      "name": "进化者联盟",
+      "type": "联盟",
+      "description": "变异进化者的组织，成员拥有强大的变异能力。"
+    },
+    {
+      "id": "apocalypse_raider",
+      "name": "掠夺者联盟",
+      "type": "联盟",
+      "description": "废土掠夺者的松散联盟，行事不择手段。"
+    }
+  ],
+  "baseCoefficient": 1.5,
+  "actualCoefficient": 1.5,
+  "difficulty": "困难",
+  "dangers": [
+    {
+      "id": "weak_enemies",
+      "type": "enemy_buff",
+      "name": "敌强我弱",
+      "description": "此地敌人实力略胜一筹",
+      "triggerCondition": {
+        "type": "on_battle_start",
+        "chance": 1
+      },
+      "effect": {
+        "enemyBuffs": {
+          "attackBonus": 0.1,
+          "defenseBonus": 0.1
+        }
+      },
+      "duration": 0,
+      "dispellable": false,
+      "dangerLevel": 2
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "double_harvest",
+      "type": "special_ability",
+      "name": "双倍收获",
+      "description": "战斗奖励翻倍",
+      "triggerCondition": {
+        "type": "on_battle_end",
+        "chance": 0.4
+      },
+      "effect": {
+        "specialEffects": {
+          "type": "double_drop",
+          "value": 2
+        }
+      },
+      "duration": 0,
+      "opportunityLevel": 4
+    },
+    {
+      "id": "damage_reduction",
+      "type": "special_ability",
+      "name": "护体神光",
+      "description": "受到的伤害减少15%",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "specialEffects": {
+          "type": "reduced_damage",
+          "value": 0.15
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 3
+    }
+  ],
+  "ratingScore": 0
+}

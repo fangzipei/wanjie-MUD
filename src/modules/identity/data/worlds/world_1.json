@@ -1,0 +1,280 @@
+{
+  "id": 1,
+  "name": "武帝大陆",
+  "type": "高武",
+  "description": "武道文明璀璨，血脉觉醒者天赋异禀",
+  "powerSystem": "战士 → 战将 → 战帅 → 战王 → 战皇 → 战帝 → 战圣 → 战神 → 战尊 → 战天",
+  "realmSystem": {
+    "mainRealmName": "战神体系",
+    "subRealmName": "入门至大成",
+    "tiers": [
+      {
+        "name": "战士",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "战将",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          11,
+          20
+        ]
+      },
+      {
+        "name": "战帅",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          21,
+          30
+        ]
+      },
+      {
+        "name": "战王",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          31,
+          40
+        ]
+      },
+      {
+        "name": "战皇",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          41,
+          50
+        ]
+      },
+      {
+        "name": "战帝",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          51,
+          60
+        ]
+      },
+      {
+        "name": "战圣",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          61,
+          70
+        ]
+      },
+      {
+        "name": "战神",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          71,
+          80
+        ]
+      },
+      {
+        "name": "战尊",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          81,
+          90
+        ]
+      },
+      {
+        "name": "战天",
+        "subRealms": [
+          "入门",
+          "初窥",
+          "小成",
+          "入门",
+          "初窥",
+          "小成",
+          "大成",
+          "大成",
+          "圆满",
+          "大成"
+        ],
+        "levelRange": [
+          91,
+          100
+        ]
+      }
+    ]
+  },
+  "majorForces": "武道圣地之武道圣地、上古血脉之凤族与天武皇朝",
+  "factions": [
+    {
+      "id": "wu_saint_land",
+      "name": "武道圣地",
+      "type": "宗门",
+      "description": "天下武道之源，传承最古老的武学秘典。"
+    },
+    {
+      "id": "wu_phoenix_clan",
+      "name": "凤族",
+      "type": "家族",
+      "description": "凤凰血脉传承者，掌控火焰之力。"
+    },
+    {
+      "id": "wu_empire",
+      "name": "天武皇朝",
+      "type": "皇朝",
+      "description": "以武立国的强大皇朝，疆域辽阔，武者众多。"
+    }
+  ],
+  "baseCoefficient": 1.3,
+  "actualCoefficient": 1.3,
+  "difficulty": "困难",
+  "dangers": [
+    {
+      "id": "reduced_insight",
+      "type": "stat_debuff",
+      "name": "悟性压制",
+      "description": "天机混乱，领悟效率下降",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "悟性": -2,
+          "灵根": -1
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 2
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "immortal_favor",
+      "type": "favorable_event",
+      "name": "仙人垂青",
+      "description": "获得仙人庇护，经验翻倍、伤害减免30%、掉落提升",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 0.08
+      },
+      "effect": {
+        "specialEffects": {
+          "type": "double_exp",
+          "value": 2
+        },
+        "statModifications": {
+          "幸运": 3
+        },
+        "dropBonus": {
+          "rarityBoost": 2,
+          "extraDropChance": 0.4
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 5,
+      "conflictsWith": [
+        "no_healing",
+        "heavy_curse"
+      ]
+    }
+  ],
+  "ratingScore": 0
+}

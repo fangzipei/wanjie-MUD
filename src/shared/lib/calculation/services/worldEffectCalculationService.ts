@@ -9,6 +9,7 @@ import {
   WorldDanger,
   WorldOpportunity,
 } from '@/modules/identity/data/worldEffectsData';
+import { calculateWorldRewardCoefficient } from '@/modules/identity/data/worldSystem';
 import { Enemy } from '@/modules/combat/logic/enemy/types';
 import { Protagonist, World, StatName } from '@/shared/lib/types';
 import { WorldDangerAdapter, WorldOpportunityAdapter } from '../adapters/worldEffectAdapter';
@@ -202,7 +203,7 @@ export class WorldEffectCalculationService {
   // ============================================
   
   /**
-   * 计算世界奖励系数
+   * 计算世界奖励系数（运行时动态计算，不再依赖 World 静态字段）
    */
   calculateRewardCoefficients(world: World): {
     expMultiplier: number;
@@ -215,13 +216,13 @@ export class WorldEffectCalculationService {
       mythic: number;
     };
   } {
-    const baseCoefficients = world.rewardCoefficient;
-    
+    const coeffs = calculateWorldRewardCoefficient(world.actualCoefficient);
+
     return {
-      expMultiplier: baseCoefficients.expCoefficient,
-      spiritStoneMultiplier: baseCoefficients.spiritStoneCoefficient,
-      dropMultiplier: baseCoefficients.dropCoefficient,
-      rarityBonus: { ...baseCoefficients.rarityBonus },
+      expMultiplier: coeffs.expCoefficient,
+      spiritStoneMultiplier: coeffs.spiritStoneCoefficient,
+      dropMultiplier: coeffs.dropCoefficient,
+      rarityBonus: { ...coeffs.rarityBonus },
     };
   }
   

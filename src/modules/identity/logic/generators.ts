@@ -39,11 +39,11 @@ import {
 import {
   calculateWorldDifficultyCoefficient,
   getWorldDifficultyFromCoefficient,
-  calculateWorldRewardCoefficient,
   generateWorldDangers,
   generateWorldOpportunities,
   getWorldBaseCoefficient,
 } from '@/modules/identity/data/worldSystem';
+import { createRng } from '@/shared/utils/rng';
 
 // 重新导出境界相关函数，供其他模块使用
 export { 
@@ -260,34 +260,35 @@ export function getWorldTerms(worldType: WorldType) {
   return getTerminology(worldType);
 }
 
-// 生成世界
-export function generateWorld(id: number, ascensionCount: number = 0): World {
-  const type = worldTypes[id - 1] || randomItem(worldTypes);
-  const name = randomItem(worldPrefixes[type]) + randomItem(worldSuffixes[type]);
-  const description = randomItem(worldDescriptions[type]);
-  
+// 生成世界（seed 即为 world.id，用作 createRng 的种子，确保确定性）
+export function generateWorld(seed: number, ascensionCount: number = 0): World {
+  const rng = createRng(seed);
+  const type = worldTypes[Math.abs(seed) % worldTypes.length];
+  const name = randomItem(worldPrefixes[type], rng) + randomItem(worldSuffixes[type], rng);
+  const description = randomItem(worldDescriptions[type], rng);
+
   // 生成境界系统
   const realmSystem = generateRealmSystem(type);
   const powerSystem = getPowerSystemDescription(realmSystem);
-  
+
   // 生成势力列表
   const factions = generateWorldFactions(type);
   const majorForces = generateFactionDescription(type, factions);
-  
+
   // 计算难度系数
   const baseCoefficient = getWorldBaseCoefficient(type);
   const actualCoefficient = calculateWorldDifficultyCoefficient(baseCoefficient, ascensionCount);
   const difficulty = getWorldDifficultyFromCoefficient(actualCoefficient);
-  
-  // 生成危险和机缘
-  const dangers = generateWorldDangers(type, actualCoefficient);
-  const opportunities = generateWorldOpportunities(type, actualCoefficient, dangers);
-  
-  // 计算奖励系数
-  const rewardCoefficient = calculateWorldRewardCoefficient(actualCoefficient);
-  
+
+  // 生成危险和机缘（传入 RNG 确保确定性）
+  const dangers = generateWorldDangers(type, actualCoefficient, rng);
+  const opportunities = generateWorldOpportunities(type, actualCoefficient, dangers, rng);
+
+  // ratingScore 由用户通过评价反馈设置，生成时默认为 0
+  const ratingScore = 0;
+
   return {
-    id,
+    id: seed,
     name,
     type,
     description,
@@ -300,56 +301,22 @@ export function generateWorld(id: number, ascensionCount: number = 0): World {
     difficulty,
     dangers,
     opportunities,
-    rewardCoefficient,
+    ratingScore,
   };
 }
 
-// 生成8个世界
-export function generateWorlds(ascensionCount: number = 0, rng: () => number = Math.random): World[] {
-  // 打乱世界类型顺序
-  const shuffledTypes = [...worldTypes].sort(() => rng() - 0.5);
-  
-  return shuffledTypes.map((type, index) => {
-    const name = randomItem(worldPrefixes[type]) + randomItem(worldSuffixes[type]);
-    const description = randomItem(worldDescriptions[type]);
-    
-    // 生成境界系统
-    const realmSystem = generateRealmSystem(type);
-    const powerSystem = getPowerSystemDescription(realmSystem);
-    
-    // 生成势力列表
-    const factions = generateWorldFactions(type);
-    const majorForces = generateFactionDescription(type, factions);
-    
-    // 计算难度系数
-    const baseCoefficient = getWorldBaseCoefficient(type);
-    const actualCoefficient = calculateWorldDifficultyCoefficient(baseCoefficient, ascensionCount);
-    const difficulty = getWorldDifficultyFromCoefficient(actualCoefficient);
-    
-    // 生成危险和机缘
-    const dangers = generateWorldDangers(type, actualCoefficient);
-    const opportunities = generateWorldOpportunities(type, actualCoefficient, dangers);
-    
-    // 计算奖励系数
-    const rewardCoefficient = calculateWorldRewardCoefficient(actualCoefficient);
-    
-    return {
-      id: index + 1,
-      name,
-      type,
-      description,
-      powerSystem,
-      realmSystem,
-      majorForces,
-      factions,
-      baseCoefficient,
-      actualCoefficient,
-      difficulty,
-      dangers,
-      opportunities,
-      rewardCoefficient,
-    };
-  });
+/** 默认世界种子（对应 8 种世界类型各一个） */
+export const DEFAULT_WORLD_SEEDS: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7];
+
+/**
+ * 按种子列表生成世界
+ *
+ * @param seeds - 世界种子列表（每个种子确定生成一个世界）
+ * @param ascensionCount - 飞升次数（影响难度系数）
+ * @returns 生成的世界列表
+ */
+export function generateWorlds(seeds: number[] = [...DEFAULT_WORLD_SEEDS], ascensionCount: number = 0): World[] {
+  return seeds.map(seed => generateWorld(seed, ascensionCount));
 }
 
 /**

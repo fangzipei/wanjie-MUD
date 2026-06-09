@@ -379,16 +379,24 @@ export interface World {
   actualCoefficient: number;
   /** 世界难度（由实际系数计算得出） */
   difficulty: WorldDifficulty;
-  
+
   // === 危险与机缘 ===
   /** 世界危险效果列表 */
   dangers: import('@/modules/identity/data/worldEffectsData').WorldDanger[];
   /** 世界机缘效果列表 */
   opportunities: import('@/modules/identity/data/worldEffectsData').WorldOpportunity[];
-  
-  // === 奖励系数 ===
-  /** 奖励系数 */
-  rewardCoefficient: import('@/modules/identity/data/worldEffectsData').WorldRewardCoefficient;
+
+  // === 综合评价 ===
+  /** 世界综合评价分数（1-100，由生成时计算） */
+  ratingScore: number;
+
+  // === 特殊剧情 ===
+  /** 特殊剧情引用（指向 modules/narrative/story 中的 Story） */
+  specialPlot?: {
+    storyId: string;
+    title: string;
+    description: string;
+  } | null;
 }
 
 // 道具类型

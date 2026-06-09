@@ -1,0 +1,272 @@
+{
+  "id": 4,
+  "name": "进化城市",
+  "type": "异能",
+  "description": "觉醒者遍布的现代都市，异能改变命运",
+  "powerSystem": "微变异 → 轻变异 → 中变异 → 重变异 → 强变异 → 极变异 → 超变异 → 完美变异 → 终极变异 → 神级变异",
+  "realmSystem": {
+    "mainRealmName": "变异等级",
+    "subRealmName": "一至九重",
+    "tiers": [
+      {
+        "name": "微变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "轻变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          11,
+          20
+        ]
+      },
+      {
+        "name": "中变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          21,
+          30
+        ]
+      },
+      {
+        "name": "重变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          31,
+          40
+        ]
+      },
+      {
+        "name": "强变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          41,
+          50
+        ]
+      },
+      {
+        "name": "极变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          51,
+          60
+        ]
+      },
+      {
+        "name": "超变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          61,
+          70
+        ]
+      },
+      {
+        "name": "完美变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          71,
+          80
+        ]
+      },
+      {
+        "name": "终极变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          81,
+          90
+        ]
+      },
+      {
+        "name": "神级变异",
+        "subRealms": [
+          "一重",
+          "二重",
+          "三重",
+          "四重",
+          "五重",
+          "六重",
+          "七重",
+          "八重",
+          "九重",
+          "圆满"
+        ],
+        "levelRange": [
+          91,
+          100
+        ]
+      }
+    ]
+  },
+  "majorForces": "异能管理局、自由异能联盟、超凡科技集团与觉醒学院",
+  "factions": [
+    {
+      "id": "ability_bureau",
+      "name": "异能管理局",
+      "type": "联盟",
+      "description": "官方异能者管理机构，维护异能者秩序。"
+    },
+    {
+      "id": "ability_resistance",
+      "name": "自由异能联盟",
+      "type": "联盟",
+      "description": "反抗管理局统治的异能者组织，追求异能者自由。"
+    },
+    {
+      "id": "ability_corp",
+      "name": "超凡科技集团",
+      "type": "公会",
+      "description": "研究异能的商业巨头，掌握异能增幅技术。"
+    },
+    {
+      "id": "ability_academy",
+      "name": "觉醒学院",
+      "type": "学院",
+      "description": "异能者培训学府，专门培养年轻异能者。"
+    }
+  ],
+  "baseCoefficient": 1.2,
+  "actualCoefficient": 1.2,
+  "difficulty": "普通",
+  "dangers": [],
+  "opportunities": [
+    {
+      "id": "treasure_vein",
+      "type": "resource_gain",
+      "name": "灵脉矿藏",
+      "description": "发现灵脉，每次探索额外获得灵石",
+      "triggerCondition": {
+        "type": "on_explore",
+        "chance": 0.35
+      },
+      "effect": {
+        "resourceGains": {
+          "spiritStones": 80
+        }
+      },
+      "duration": 0,
+      "opportunityLevel": 2
+    },
+    {
+      "id": "resource_rich",
+      "type": "resource_gain",
+      "name": "资源富集",
+      "description": "此地资源丰富，探索收益翻倍",
+      "triggerCondition": {
+        "type": "on_explore",
+        "chance": 0.4
+      },
+      "effect": {
+        "resourceGains": {
+          "spiritStones": 150,
+          "exp": 50
+        }
+      },
+      "duration": 0,
+      "opportunityLevel": 3
+    }
+  ],
+  "ratingScore": 0
+}
