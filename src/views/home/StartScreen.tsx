@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import { Sparkles, Upload, X } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
@@ -168,9 +169,9 @@ export function StartScreen({ onStart, onImportSave }: StartScreenProps) {
 
           {/* ===== 描述文字 ===== */}
           <p className="text-sm text-muted-foreground/80 leading-relaxed tracking-wide">
-            在万界宇宙中，八位命运之子即将踏上各自的修行之路。
+            万界之门已开启，星辰指引着命运的方向。
             <br />
-            选择你的化身，降临一方世界，开启属于你的传说。
+            择一方天地，书写属于你的不朽传奇。
           </p>
 
           {/* ===== 开始按钮（带光晕） ===== */}
@@ -189,7 +190,7 @@ export function StartScreen({ onStart, onImportSave }: StartScreenProps) {
                 active:scale-[0.98]"
             >
               <Sparkles className="w-4 h-4 mr-2" />
-              开启命运之门
+              踏入万界
             </Button>
           </div>
 

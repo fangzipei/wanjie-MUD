@@ -43,7 +43,9 @@
       "Bash(xargs sed -i \"s|from '@/lib/data/worldEffectsData'|from '@/modules/identity/data/worldEffectsData'|g\")",
       "Bash(xargs sed -i \"s|from '@/lib/data/worldEffectsUtils'|from '@/modules/identity/data/worldEffectsUtils'|g\")",
       "Bash(xargs sed -i \"s|from '@/lib/data/worldSystem'|from '@/modules/identity/data/worldSystem'|g\")",
-      "Bash(pnpm lint *)"
+      "Bash(pnpm lint *)",
+      "Bash(cd /mnt/c/Users/encai/Desktop/wanjie-MUD && openspec new change \"world-first-selection-flow\")",
+      "Read(//mnt/c/Users/encai/Desktop/**)"
     ]
   }
 }

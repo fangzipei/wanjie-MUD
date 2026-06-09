@@ -9,6 +9,12 @@ import { WorldType, WorldImpact, StatImpact, CellType, EnemyTier, WorldDifficult
 // 重新导出 EnemyTier（从 types 导入）
 export type { EnemyTier } from '@/shared/lib/types';
 
+/**
+ * 世界类型权威列表（唯一数据源）
+ * 新增/删除世界类型只需修改此处
+ */
+export const WORLD_TYPES: WorldType[] = ['修仙', '高武', '科技', '魔幻', '异能', '仙侠', '武侠', '末世'];
+
 // ============================================
 // 世界系数系统
 // ============================================
@@ -121,6 +127,9 @@ export interface WorldStats {
   enemyAttackBonus: number;
   /** 敌人额外防御力系数（旧版兼容） */
   enemyDefenseBonus: number;
+
+  /** 属性显示名映射（按世界类型差异化） */
+  statDisplayNames: Record<string, string>;
 }
 
 // ============================================
@@ -168,8 +177,15 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.8,
     enemyAttackBonus: 0,
     enemyDefenseBonus: 0,
+    statDisplayNames: {
+      '体质': '体质',
+      '灵根': '灵根',
+      '悟性': '悟性',
+      '幸运': '幸运',
+      '意志': '意志',
+    },
   },
-  
+
   '高武': {
     namePrefixes: ['苍龙', '玄武', '白虎', '朱雀', '麒麟', '神凤'],
     nameSuffixes: ['大陆', '域', '疆', '界', '州'],
@@ -210,6 +226,13 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.8,
     enemyAttackBonus: 0.1,
     enemyDefenseBonus: 0.1,
+    statDisplayNames: {
+      '体质': '体魄',
+      '灵根': '根骨',
+      '悟性': '悟性',
+      '幸运': '机缘',
+      '意志': '战意',
+    },
   },
   
   '科技': {
@@ -252,7 +275,14 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 1.0,
     enemyAttackBonus: 0.15,
     enemyDefenseBonus: 0,
-  },
+
+    statDisplayNames: {
+      '体质': '体能',
+      '灵根': '智力',
+      '悟性': '反应',
+      '幸运': '技术',
+      '意志': '魅力',
+    },  },
   
   '魔幻': {
     namePrefixes: ['艾泽', '诺瓦', '奥兰', '神秘', '永恒', '圣光'],
@@ -294,7 +324,14 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.9,
     enemyAttackBonus: 0.05,
     enemyDefenseBonus: 0.05,
-  },
+
+    statDisplayNames: {
+      '体质': '力量',
+      '灵根': '魔力',
+      '悟性': '感知',
+      '幸运': '魅力',
+      '意志': '精神',
+    },  },
   
   '异能': {
     namePrefixes: ['觉醒', '变异', '超凡', '进化', '源能', '异变'],
@@ -336,7 +373,14 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.7,
     enemyAttackBonus: 0.1,
     enemyDefenseBonus: 0.05,
-  },
+
+    statDisplayNames: {
+      '体质': '体能',
+      '灵根': '源能',
+      '悟性': '感知',
+      '幸运': '幸运',
+      '意志': '意志',
+    },  },
   
   '仙侠': {
     namePrefixes: ['剑气', '仙云', '凌霄', '飞剑', '天剑', '灵剑'],
@@ -378,7 +422,14 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.8,
     enemyAttackBonus: 0.1,
     enemyDefenseBonus: 0,
-  },
+
+    statDisplayNames: {
+      '体质': '体质',
+      '灵根': '仙根',
+      '悟性': '剑心',
+      '幸运': '仙缘',
+      '意志': '道心',
+    },  },
   
   '武侠': {
     namePrefixes: ['江湖', '武当', '少林', '华山', '峨眉', '昆仑'],
@@ -420,8 +471,16 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 0.9,
     enemyAttackBonus: 0,
     enemyDefenseBonus: 0.1,
+
+    statDisplayNames: {
+      '体质': '根骨',
+      '灵根': '悟性',
+      '悟性': '慧根',
+      '幸运': '机缘',
+      '意志': '毅力',
+    },
   },
-  
+
   '末世': {
     namePrefixes: ['废土', '荒芜', '末世', '崩坏', '毁灭', '残存'],
     nameSuffixes: ['世界', '之地', '废墟', '区域', '疆域'],
@@ -462,7 +521,14 @@ export const WORLD_DATA: Record<WorldType, WorldStats> = {
     defensePerWillpower: 1.0,
     enemyAttackBonus: 0.2,
     enemyDefenseBonus: 0.15,
-  },
+
+    statDisplayNames: {
+      '体质': '体质',
+      '灵根': '适应性',
+      '悟性': '洞察',
+      '幸运': '运气',
+      '意志': '意志',
+    },  },
 };
 
 // ============================================

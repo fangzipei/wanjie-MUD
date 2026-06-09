@@ -2,28 +2,46 @@
 
 import { RefreshCw, Swords, BookOpen, Shield, Compass } from 'lucide-react';
 
+import { impactLevelToQuality, getQualityClasses } from '@/modules/equipment/logic/quality';
+import { useStatLabels } from '@/modules/identity/hooks/useStatLabels';
+import { sumImpacts } from '@/modules/identity/logic/generators';
+import type { Character, CharacterStats, ImpactLevel, StatImpact, WorldType } from '@/shared/lib/types';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Card, CardContent } from '@/shared/ui/card';
-import { impactLevelToQuality, getQualityClasses } from '@/modules/equipment/logic/quality';
-import { getAttributeNames } from '@/modules/narrative/logic/terminology';
-import { Character, CharacterStats, ImpactLevel, StatImpact } from '@/shared/lib/types';
 import { cn } from '@/shared/utils';
+import { WorldInfoBar } from './WorldInfoBar';
 
 interface CharacterSelectProps {
   characters: Character[];
   onSelect: (character: Character) => void;
   onRefresh?: () => void;
+  /** 已选世界类型（用于显示世界正确的属性名） */
+  worldType?: WorldType;
+  /** 已选世界名称 */
+  worldName?: string;
+  /** 返回世界选择 */
+  onBack?: () => void;
 }
+
+// 世界主题色（用于卡牌边框）
+const worldCardBorder: Record<WorldType, string> = {
+  '修仙': 'hover:border-amber-500/50 border-amber-500/20',
+  '高武': 'hover:border-red-500/50 border-red-500/20',
+  '科技': 'hover:border-cyan-500/50 border-cyan-500/20',
+  '魔幻': 'hover:border-purple-500/50 border-purple-500/20',
+  '异能': 'hover:border-indigo-500/50 border-indigo-500/20',
+  '仙侠': 'hover:border-teal-500/50 border-teal-500/20',
+  '武侠': 'hover:border-stone-500/50 border-stone-500/20',
+  '末世': 'hover:border-zinc-500/50 border-zinc-500/20',
+};
 
 // 性别样式配置
 const genderStyles = {
   '男': {
-    cardBorder: 'border-blue-400',
     badge: 'bg-blue-500/15 text-blue-600 border-blue-500/30',
   },
   '女': {
-    cardBorder: 'border-pink-400',
     badge: 'bg-pink-500/15 text-pink-600 border-pink-500/30',
   },
 };
@@ -128,23 +146,8 @@ function TraitDetail({
   );
 }
 
-// 计算多个影响的总和
-function sumImpacts(impacts: StatImpact[]): StatImpact {
-  const result: StatImpact = { 体质: 0, 灵根: 0, 悟性: 0, 幸运: 0, 意志: 0 };
-  for (const impact of impacts) {
-    result.体质 = (result.体质 || 0) + (impact.体质 || 0);
-    result.灵根 = (result.灵根 || 0) + (impact.灵根 || 0);
-    result.悟性 = (result.悟性 || 0) + (impact.悟性 || 0);
-    result.幸运 = (result.幸运 || 0) + (impact.幸运 || 0);
-    result.意志 = (result.意志 || 0) + (impact.意志 || 0);
-  }
-  return result;
-}
-
-export function CharacterSelect({ characters, onSelect, onRefresh }: CharacterSelectProps) {
-  const defaultWorldType: '修仙' = '修仙';
-  const attrNames = getAttributeNames(defaultWorldType);
-  const statKeys = ['体质', '灵根', '悟性', '幸运', '意志'] as const;
+export function CharacterSelect({ characters, onSelect, onRefresh, worldType = '修仙', worldName, onBack }: CharacterSelectProps) {
+  const { labels: attrNames, statKeys } = useStatLabels(worldType);
   
   const maleCount = characters.filter(c => c.gender === '男').length;
   const femaleCount = characters.filter(c => c.gender === '女').length;
@@ -158,10 +161,15 @@ export function CharacterSelect({ characters, onSelect, onRefresh }: CharacterSe
   return (
     <div className="min-h-dvh bg-background p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
+        {/* 世界信息条 */}
+        {worldName && worldType && onBack && (
+          <WorldInfoBar worldName={worldName} worldType={worldType} onBack={onBack} />
+        )}
+
         {/* 标题 */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground">选择你的化身</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground font-serif">命运之契 · 谁将踏入此界</h1>
             {onRefresh && (
               <Button
                 variant="outline"
@@ -170,12 +178,12 @@ export function CharacterSelect({ characters, onSelect, onRefresh }: CharacterSe
                 className="gap-1"
               >
                 <RefreshCw className="w-4 h-4" />
-                刷新
+                逆天改命
               </Button>
             )}
           </div>
           <p className="text-muted-foreground text-sm mb-4">
-            八位命运之子，各有不同的人生轨迹
+            天道推演，八位命运之子静待抉择
             <span className="ml-2">
               （男 {maleCount} 人，女 {femaleCount} 人）
             </span>
@@ -230,8 +238,8 @@ export function CharacterSelect({ characters, onSelect, onRefresh }: CharacterSe
               <Card 
                 key={character.id}
                 className={cn(
-                  "cursor-pointer transition-all duration-200 hover:shadow-md hover:border-primary/30",
-                  genderStyles[character.gender].cardBorder
+                  "cursor-pointer transition-all duration-200 hover:shadow-md border-2",
+                  worldCardBorder[worldType]
                 )}
                 onClick={() => onSelect(character)}
               >

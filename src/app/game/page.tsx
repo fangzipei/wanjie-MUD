@@ -17,15 +17,15 @@ export default function GamePage() {
     if (!gameState.protagonist && gameState.phase !== 'playing') {
       if (gameState.selectedCharacter && gameState.selectedWorld) {
         router.replace('/backstory');
-      } else if (gameState.selectedCharacter) {
-        router.replace('/world-select');
-      } else if (gameState.characters.length > 0) {
+      } else if (gameState.selectedWorld) {
         router.replace('/character-select');
+      } else if (gameState.worlds.length > 0) {
+        router.replace('/world-select');
       } else {
         router.replace('/');
       }
     }
-  }, [gameState.phase, gameState.protagonist, gameState.characters.length, gameState.selectedCharacter, gameState.selectedWorld, router]);
+  }, [gameState.phase, gameState.protagonist, gameState.worlds.length, gameState.selectedCharacter, gameState.selectedWorld, router]);
 
   if (!gameState.protagonist) {
     return <div className="min-h-screen flex items-center justify-center">加载中...</div>;

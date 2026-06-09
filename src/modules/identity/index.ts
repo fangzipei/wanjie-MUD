@@ -16,19 +16,20 @@ export {
   generateImpactDescription,
   calculateTotalImpact,
   QUALITY_CONFIG,
-  ORIGIN_TRAITS,
-  TRAIT_TRAITS,
-  PERSONALITY_TRAITS,
-  TALENT_TRAITS,
 } from './logic/traits';
-export type { TraitDefinition } from './logic/traits';
+export { WORLD_TRAIT_DEFINITIONS } from './data/traits';
+export type { TraitDefinition } from './data/traits';
+
+// —— 姓名系统 ——
+export { WORLD_NAME_POOLS } from './data/namePools';
 
 // —— 世界生成 ——
 export { getWorldMechanics, hasUniqueMechanics } from './logic/worlds/factory';
 export type { WorldMechanics } from './logic/worlds/types';
 
 // —— 世界数据 ——
-export { WORLD_DATA, WORLD_COEFFICIENTS } from './data/worldData';
+export { WORLD_DATA, WORLD_COEFFICIENTS, WORLD_TYPES } from './data/worldData';
+export { getStatDisplayName } from './data/statDisplayNames';
 export {
   calculateWorldDifficultyCoefficient,
   getWorldDifficultyFromCoefficient,
