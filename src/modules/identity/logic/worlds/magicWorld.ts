@@ -6,8 +6,9 @@
  * 装备→法杖+法袍
  */
 
-import type { WorldMechanics } from './types';
 import type { BattleAction, ManualBattleState, AutoBattleStrategy } from '@/modules/combat/logic/engine/types';
+
+import type { WorldMechanics } from './types';
 
 /** 法术记忆槽位状态 */
 export interface SpellMemorySlots {
@@ -72,4 +73,11 @@ export const magicWorld: WorldMechanics = {
     }
     return { type: 'attack', source: 'ai' };
   },
+
+  /** 法术记忆槽位：最多记忆4个法术，在魔力节点可更换 */
+  getUniqueMechanicDescription: () => ({
+    name: '法术记忆',
+    description: '最多记忆4个法术到槽位中，战斗中只能使用已记忆的法术。探索时可在魔力节点更换法术，策略搭配是关键。',
+    icon: 'BookOpen',
+  }),
 };

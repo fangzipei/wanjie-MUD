@@ -6,8 +6,9 @@
  * 装备→神兵+宝甲（双槽位）
  */
 
-import type { WorldMechanics } from './types';
 import type { BattleAction, ManualBattleState, AutoBattleStrategy } from '@/modules/combat/logic/engine/types';
+
+import type { WorldMechanics } from './types';
 
 /** 武侠连招状态（内部追踪） */
 interface ComboState {
@@ -93,4 +94,11 @@ export const martialWorld: WorldMechanics = {
 
     return { type: 'attack', source: 'ai' };
   },
+
+  /** 武功连招：连续使用同门派武功伤害递增，最高+45% */
+  getUniqueMechanicDescription: () => ({
+    name: '连招递增',
+    description: '连续使用同一门派的武功每回合伤害+15%，最多叠加3层（+45%）。保持连招是武侠战斗的核心策略。',
+    icon: 'Waves',
+  }),
 };

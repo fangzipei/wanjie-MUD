@@ -15,19 +15,19 @@ export default function CharacterSelectPage() {
   useEffect(() => {
     if (gameState.phase === 'playing' && gameState.protagonist) {
       router.replace('/game');
-    } else if (gameState.phase === 'world-select' && gameState.selectedCharacter) {
+    } else if (gameState.phase === 'world-select') {
       router.replace('/world-select');
     } else if (gameState.phase === 'backstory' && gameState.protagonist) {
       router.replace('/backstory');
     } else if (gameState.characters.length === 0 && gameState.phase === 'character-select') {
-      // Need to generate characters first
-      router.replace('/');
+      // Need to go back to world select
+      router.replace('/world-select');
     }
-  }, [gameState.phase, gameState.protagonist, gameState.selectedCharacter, gameState.characters.length, router]);
+  }, [gameState.phase, gameState.protagonist, gameState.selectedWorld, gameState.characters.length, router]);
 
   const handleSelect = (character: Parameters<typeof selectCharacter>[0]) => {
     selectCharacter(character);
-    router.push('/world-select');
+    router.push('/backstory');
   };
 
   return (
@@ -35,6 +35,9 @@ export default function CharacterSelectPage() {
       characters={gameState.characters}
       onSelect={handleSelect}
       onRefresh={refreshCharacters}
+      worldType={gameState.selectedWorld?.type}
+      worldName={gameState.selectedWorld?.name}
+      onBack={() => router.push('/world-select')}
     />
   );
 }

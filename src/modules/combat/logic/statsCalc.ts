@@ -34,17 +34,18 @@ const LEVEL_GROWTH = {
   speed: 0.5,
 } as const;
 
-/** 世界系数 */
-const WORLD_COEFFICIENTS: Record<WorldType, number> = {
-  '修仙': 1.0,
-  '高武': 1.1,
-  '科技': 0.9,
-  '魔幻': 1.0,
-  '异能': 0.95,
-  '仙侠': 1.0,
-  '武侠': 0.85,
-  '末世': 1.15,
-} as const;
+// 世界系数从权威数据源导入（identity/data/worldData.ts）
+import { WORLD_COEFFICIENTS } from '@/modules/identity/data/worldData';
+
+/**
+ * 将世界难度系数转换为敌人属性倍率
+ * 公式：enemyMultiplier = 0.5 + coefficient * 0.5
+ * 范围：武侠(1.0) → 1.0x，末世(1.5) → 1.25x
+ */
+function getWorldEnemyMultiplier(worldType: WorldType): number {
+  const coefficient = WORLD_COEFFICIENTS[worldType] || 1.0;
+  return 0.5 + coefficient * 0.5;
+}
 
 /** 元素列表 */
 export const ELEMENTS: readonly Element[] = ['fire', 'ice', 'thunder', 'wind', 'earth', 'light', 'dark'] as const;
@@ -128,7 +129,7 @@ function applyWorldCoefficient(
   baseStats: ReturnType<typeof calculateBaseStats>,
   worldType: WorldType
 ): ReturnType<typeof calculateBaseStats> {
-  const coefficient = WORLD_COEFFICIENTS[worldType] || 1.0;
+  const coefficient = getWorldEnemyMultiplier(worldType);
   
   return {
     hp: Math.floor(baseStats.hp * coefficient),
@@ -324,5 +325,5 @@ export function calculateBaseDefense(level: number, worldType: WorldType): numbe
  * 获取世界系数
  */
 export function getWorldCoefficient(worldType: WorldType): number {
-  return WORLD_COEFFICIENTS[worldType] || 1.0;
+  return getWorldEnemyMultiplier(worldType);
 }

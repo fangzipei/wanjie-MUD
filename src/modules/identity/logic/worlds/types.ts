@@ -5,10 +5,9 @@
  * 通过策略模式隔离世界差异化逻辑。
  */
 
-import type { GameState } from '@/shared/lib/types';
-import type { CultivationStrategy } from '@/modules/progression/logic/types';
 import type { BattleAction, ManualBattleState } from '@/modules/combat/logic/engine/types';
 import type { AutoBattleStrategy } from '@/modules/combat/logic/engine/types';
+import type { GameState } from '@/shared/lib/types';
 
 // ============================================
 // 修炼行为
@@ -78,6 +77,9 @@ export interface WorldMechanics {
   /** 获取探索相关参数 */
   getExplorationParams: () => WorldExplorationParams;
 
+  /** 获取独特机制描述（用于 UI 展示） */
+  getUniqueMechanicDescription: () => UniqueMechanicInfo;
+
   /** 自定义修炼成功率计算（可选，默认使用标准公式） */
   customSuccessRate?: (baseRate: number, state: GameState) => number;
 
@@ -86,4 +88,20 @@ export interface WorldMechanics {
 
   /** 自定义自动战斗策略（可选） */
   customAutoStrategy?: (state: ManualBattleState, strategy: AutoBattleStrategy) => BattleAction;
+
+  /** 进入世界时的初始化钩子（可选） */
+  onWorldEnter?: (state: GameState) => GameState;
+
+  /** 离开世界时的清理钩子（可选） */
+  onWorldLeave?: (state: GameState) => GameState;
+}
+
+/** 独特机制信息（用于 UI 展示） */
+export interface UniqueMechanicInfo {
+  /** 机制名称 */
+  name: string;
+  /** 机制描述 */
+  description: string;
+  /** 图标名称（对应 Lucide icon） */
+  icon: string;
 }

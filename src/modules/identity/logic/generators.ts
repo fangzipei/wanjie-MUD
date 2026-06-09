@@ -1,10 +1,10 @@
 import { evaluateCharacter, evaluateCharacters } from './characterEvaluation';
 import { getTerminology } from '@/modules/narrative/logic/terminology';
 import {
-  ORIGIN_TRAITS,
-  TRAIT_TRAITS,
-  PERSONALITY_TRAITS,
-  TALENT_TRAITS,
+  WORLD_TRAIT_DEFINITIONS,
+} from '../data/traits';
+import { WORLD_NAME_POOLS } from '../data/namePools';
+import {
   selectRandomTrait,
   generateImpactDescription,
   calculateTotalImpact,
@@ -35,6 +35,7 @@ import { getAvailableDifficultiesForRealm } from '@/modules/exploration/logic/ad
 import {
   WORLD_DATA,
   WORLD_COEFFICIENTS,
+  WORLD_TYPES,
 } from '@/modules/identity/data/worldData';
 import {
   calculateWorldDifficultyCoefficient,
@@ -69,10 +70,7 @@ const random = (min: number, max: number, rng: () => number = Math.random) =>
 const randomItem = <T>(arr: T[], rng: () => number = Math.random): T =>
   arr[Math.floor(rng() * arr.length)];
 
-// 姓名生成
-const surnames = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗'];
-const maleNames = ['天行', '浩然', '子轩', '逸风', '玄青', '明远', '志远', '凌霄', '云飞', '无极', '星河', '破军', '苍穹', '玄机'];
-const femaleNames = ['清雪', '梦璃', '紫嫣', '灵韵', '月华', '霜华', '诗涵', '雨萱', '若烟', '玉瑶', '诗韵', '凌霜', '明月', '紫霞'];
+// 姓名数据已迁移至 data/namePools.ts，通过 WORLD_NAME_POOLS[worldType] 获取
 
 /**
  * 根据词条定义生成完整词条对象
@@ -93,40 +91,8 @@ function generateTraitFromDefinition(
   };
 }
 
-// 世界名称前缀和后缀
-const worldPrefixes: Record<WorldType, string[]> = {
-  '修仙': ['九天', '玄黄', '鸿蒙', '太古', '无极', '乾坤', '苍茫', '混沌'],
-  '高武': ['神武', '天武', '武极', '霸武', '万武', '武帝', '圣武', '龙武'],
-  '科技': ['星河', '银河', '星际', '星域', '星云', '星盟', '星联', '星环'],
-  '魔幻': ['艾泽', '阿卡', '魔法', '元素', '神圣', '龙语', '精灵', '混沌'],
-  '异能': ['觉醒', '异变', '超能', '进化', '变异', '新纪', '起源', '进化'],
-  '仙侠': ['仙剑', '剑仙', '仙霞', '青云', '蓬莱', '昆仑', '蜀山', '仙云'],
-  '武侠': ['江湖', '武林', '天机', '风云', '逍遥', '武道', '侠义', '乱世'],
-  '末世': ['废土', '荒原', '末日', '辐射', '尘世', '残存', '重生', '末日']
-};
-
-const worldSuffixes: Record<WorldType, string[]> = {
-  '修仙': ['界', '域', '大陆', '仙境', '圣地', '虚境', '仙域', '灵界'],
-  '高武': ['大陆', '世界', '星域', '位面', '境域', '武域', '界域', '天地'],
-  '科技': ['联邦', '帝国', '联盟', '星域', '殖民地', '空间站', '世界', '网络'],
-  '魔幻': ['大陆', '世界', '王国', '帝国', '森林', '领域', '位面', '圣地'],
-  '异能': ['世界', '都市', '城市', '区域', '联邦', '国家', '特区', '基地'],
-  '仙侠': ['界', '山', '门', '岛', '域', '境', '洞天', '福地'],
-  '武侠': ['武林', '江湖', '世界', '大陆', '天下', '朝代', '年间', '之地'],
-  '末世': ['之地', '废土', '荒原', '世界', '区域', '地带', '遗址', '避难区']
-};
-
-// 世界描述模板
-const worldDescriptions: Record<WorldType, string[]> = {
-  '修仙': ['灵气充沛的修真世界，仙门林立，强者如云', '大道三千，皆可成仙，万族争锋', '仙道昌盛，丹药法宝百花齐放'],
-  '高武': ['武道至上，以武入道，强者可碎虚空', '武道文明璀璨，血脉觉醒者天赋异禀', '热血激荡，拳破苍穹，力压万古'],
-  '科技': ['星际文明时代，科技与基因进化并行', '未来科幻，飞船穿梭银河，AI与人类共存', '赛博朋克，虚拟与现实边界模糊'],
-  '魔幻': ['魔法文明鼎盛，元素之力充盈天地', '众神遗落，精灵巨龙共存', '魔法与剑，冒险者追寻传奇'],
-  '异能': ['觉醒者遍布的现代都市，异能改变命运', '全球异变，觉醒者主导一切', '基因突变，超能力成为常态'],
-  '仙侠': ['剑仙纵横，御剑乘风，逍遥天地', '仙魔争锋，道魔两立，纷争不断', '三界交汇，人仙魔共存'],
-  '武侠': ['江湖恩怨，门派林立，快意恩仇', '武道传承，绝世武功人人争夺', '庙堂与江湖交织，侠之大者'],
-  '末世': ['灾变后的废土世界，变异生物横行', '文明崩塌，异能与科技并存', '末日生存，弱肉强食是唯一法则']
-};
+// 世界名称/描述等数据已统一迁移至 WORLD_DATA（src/modules/identity/data/worldData.ts）
+// generateWorld() 和 generateWorlds() 现在从 WORLD_DATA 读取所有世界配置
 
 // 生成基础属性（所有角色相同的基础值）
 // 新结构：固定属性包含基础值50，成长属性初始为0
@@ -165,7 +131,7 @@ function applyImpact(stats: CharacterStats, impact: StatImpact): CharacterStats 
 }
 
 // 计算多个影响的总和
-function sumImpacts(impacts: StatImpact[]): StatImpact {
+export function sumImpacts(impacts: StatImpact[]): StatImpact {
   const result: StatImpact = { 体质: 0, 灵根: 0, 悟性: 0, 幸运: 0, 意志: 0 };
   for (const impact of impacts) {
     result.体质 = (result.体质 || 0) + (impact.体质 || 0);
@@ -177,16 +143,22 @@ function sumImpacts(impacts: StatImpact[]): StatImpact {
   return result;
 }
 
-// 生成随机角色
-export function generateCharacter(id: number): Character {
+/**
+ * 生成随机角色（根据世界类型使用差异化词条和姓名）
+ */
+export function generateCharacter(id: number, worldType: WorldType = '修仙'): Character {
   const gender = randomItem(['男', '女'] as const);
-  const name = randomItem(surnames) + (gender === '男' ? randomItem(maleNames) : randomItem(femaleNames));
-  
-  // 使用新的词条系统生成词条
-  const originResult = selectRandomTrait(ORIGIN_TRAITS);
-  const traitResult = selectRandomTrait(TRAIT_TRAITS);
-  const personalityResult = selectRandomTrait(PERSONALITY_TRAITS);
-  const talentResult = selectRandomTrait(TALENT_TRAITS);
+
+  // 使用世界对应的姓名池
+  const namePool = WORLD_NAME_POOLS[worldType];
+  const name = randomItem(namePool.surnames) + (gender === '男' ? randomItem(namePool.maleNames) : randomItem(namePool.femaleNames));
+
+  // 使用世界对应的词条池
+  const traitPool = WORLD_TRAIT_DEFINITIONS[worldType];
+  const originResult = selectRandomTrait(traitPool.origin);
+  const traitResult = selectRandomTrait(traitPool.trait);
+  const personalityResult = selectRandomTrait(traitPool.personality);
+  const talentResult = selectRandomTrait(traitPool.talent);
   
   // 生成完整词条对象
   const origin = generateTraitFromDefinition(originResult.definition, originResult.impact);
@@ -215,7 +187,7 @@ export function generateCharacter(id: number): Character {
     trait,
     personality,
     talent,
-    background: '',
+    background: `${origin.name}出身，${trait.description}`,
     stats,
     totalPower,
   };
@@ -224,18 +196,20 @@ export function generateCharacter(id: number): Character {
   return evaluateCharacter(baseCharacter);
 }
 
-// 生成8个随机角色（随机男女比例）
-export function generateCharacters(): Character[] {
+/**
+ * 生成 8 个随机角色（根据世界类型使用差异化词条和属性）
+ */
+export function generateCharacters(worldType: WorldType = '修仙'): Character[] {
   // 随机男女比例 (1-7男，其余女)
   const maleCount = random(1, 7);
   const femaleCount = 8 - maleCount;
-  
+
   // 生成足够多的候选角色
   const maleCandidates: Character[] = [];
   const femaleCandidates: Character[] = [];
-  
+
   for (let i = 0; i < 32; i++) {
-    const char = generateCharacter(i + 1);
+    const char = generateCharacter(i + 1, worldType);
     if (char.gender === '男') {
       maleCandidates.push(char);
     } else {
@@ -251,9 +225,6 @@ export function generateCharacters(): Character[] {
   // 重新分配ID
   return selected.map((c, i) => ({ ...c, id: i + 1 }));
 }
-
-// 世界类型列表
-const worldTypes: WorldType[] = ['修仙', '高武', '科技', '魔幻', '异能', '仙侠', '武侠', '末世'];
 
 // 获取世界术语（兼容旧代码）
 export function getWorldTerms(worldType: WorldType) {
@@ -271,9 +242,11 @@ export function generateWorld(seed: number, ascensionCount: number = 0): World {
   const realmSystem = generateRealmSystem(type);
   const powerSystem = getPowerSystemDescription(realmSystem);
 
+
   // 生成势力列表
   const factions = generateWorldFactions(type);
   const majorForces = generateFactionDescription(type, factions);
+
 
   // 计算难度系数
   const baseCoefficient = getWorldBaseCoefficient(type);

@@ -1,0 +1,61 @@
+# backstory-ui-polish
+
+## Purpose
+
+TBD — see change character-feature-polish for full context.
+
+# backstory-ui-polish
+
+背景故事界面优化——叙事化设计、角色+世界双卡片、世界风味装饰。
+
+## ADDED Requirements
+
+### Requirement: 叙事化标题展示角色和世界
+
+背景故事页标题 SHALL 使用叙事化文案格式"宿命之章 · <角色名>踏入<世界名>"，而非直白标签。
+
+#### Scenario: 标题包含角色和世界名
+- **WHEN** 角色"云天行"选择了"九天界"
+- **THEN** 标题 SHALL 为"宿命之章 · 云天行踏入九天界"
+
+### Requirement: 角色快照卡片
+
+故事文本上方 SHALL 展示角色信息快照卡片，包含：角色姓名、性别、年龄、定位标签（如"战狂"）、5 个属性摘要。
+
+#### Scenario: 角色卡片展示关键信息
+- **WHEN** 渲染背景故事页
+- **THEN** 角色卡片 SHALL 显示姓名、定位图标+标签、年龄
+- **AND** SHALL 以紧凑格式展示 5 个属性（标签+数值）
+
+### Requirement: 世界信息卡片
+
+角色卡片旁 SHALL 展示世界信息卡片，包含：世界名称、类型图标、难度标签、势力简述。
+
+#### Scenario: 世界卡片展示世界概要
+- **WHEN** 渲染背景故事页
+- **THEN** 世界卡片 SHALL 显示世界名称、类型颜色标识、难度标签
+- **AND** SHALL 显示一句势力简述
+
+### Requirement: 世界风味文本装饰
+
+故事文本段落之间 SHALL 使用世界风格的分隔装饰，替代纯空白分隔。
+
+#### Scenario: 修仙世界用云纹分隔
+- **WHEN** 修仙世界的背景故事渲染
+- **THEN** 段落间 SHALL 使用 `◆ ◇ ◆` 或云纹风格分隔符
+
+#### Scenario: 科技世界用扫描线分隔
+- **WHEN** 科技世界的背景故事渲染
+- **THEN** 段落间 SHALL 使用 `▸ ▹ ▸` 或扫描线风格分隔符
+
+### Requirement: 确认按钮文案世界化
+
+"开启修行之旅"按钮 SHALL 根据世界类型使用不同的文案。
+
+#### Scenario: 不同世界的确认按钮
+- **WHEN** 修仙/仙侠世界 → 按钮 SHALL 为"踏上仙途"
+- **WHEN** 高武/武侠世界 → 按钮 SHALL 为"踏入江湖"
+- **WHEN** 科技世界 → 按钮 SHALL 为"启动征程"
+- **WHEN** 魔幻世界 → 按钮 SHALL 为"启程冒险"
+- **WHEN** 异能世界 → 按钮 SHALL 为"觉醒启程"
+- **WHEN** 末世世界 → 按钮 SHALL 为"踏入废土"

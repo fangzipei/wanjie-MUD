@@ -5,7 +5,7 @@
  * 保存旧世界状态，初始化新世界状态。
  */
 
-import type { GameState } from '@/shared/lib/types';
+import type { GameState, WorldType } from '@/shared/lib/types';
 
 // ============================================
 // 世界存档记录
@@ -14,7 +14,7 @@ import type { GameState } from '@/shared/lib/types';
 /** 单个世界的访问记录 */
 export interface WorldSaveData {
   /** 世界类型 */
-  worldType: string;
+  worldType: WorldType;
   /** 退出时等级 */
   level: number;
   /** 退出时灵石数 */
@@ -72,7 +72,7 @@ export function saveCurrentWorld(state: GameState): WorldSaveData {
  */
 export function buildNewWorldState(
   oldState: GameState,
-  newWorldType: string,
+  newWorldType: WorldType,
   inheritance: {
     keepTechniques: string[];
     keepEquipments: string[];

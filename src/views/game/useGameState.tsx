@@ -522,111 +522,111 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   // 这里不再重复实现，避免重复调用
   // ========================================
 
-  // 开始新游戏
+  // 开始新游戏：先生成世界列表，由玩家先选世界
   const startNewGame = useCallback(() => {
     setGameState(prev => ({
       ...createInitialGameState(),
-      phase: 'character-select',
-      characters: generateCharacters(),
+      phase: 'world-select',
       worlds: generateWorlds(),
     }));
   }, []);
 
-  // 刷新角色列表
+  // 刷新角色列表（需要知道世界类型）
   const refreshCharacters = useCallback(async () => {
-    // 生成8个新角色
-    const newCharacters = generateCharacters();
-    
-    setGameState(prev => ({
-      ...prev,
-      characters: newCharacters,
-    }));
-  }, []);
-
-  // 选择角色
-  const selectCharacter = useCallback((character: Character) => {
-    setGameState(prev => ({
-      ...prev,
-      selectedCharacter: character,
-      phase: 'world-select',
-    }));
-  }, []);
-
-  // 选择世界观
-  const selectWorld = useCallback((world: World) => {
     setGameState(prev => {
-      if (!prev.selectedCharacter) return prev;
-      
+      if (!prev.selectedWorld) return prev;
+      const newCharacters = generateCharacters(prev.selectedWorld.type);
+      return {
+        ...prev,
+        characters: newCharacters,
+      };
+    });
+  }, []);
+
+  // 选择世界观：生成角色并进入角色选择
+  const selectWorld = useCallback((world: World) => {
+    setGameState(prev => ({
+      ...prev,
+      selectedWorld: world,
+      phase: 'character-select',
+      characters: generateCharacters(world.type),
+    }));
+  }, []);
+
+  // 选择角色：生成主角和背景故事，进入游戏
+  const selectCharacter = useCallback((character: Character) => {
+    setGameState(prev => {
+      if (!prev.selectedWorld) return prev;
+
+      const world = prev.selectedWorld;
+
       // 生成背景故事
-      const backstory = generateBackstory(prev.selectedCharacter, world);
-      
+      const backstory = generateBackstory(character, world);
+
       // 初始背包物品 - 新手优化：增加初始资源
       const initialInventory: InventoryItem[] = [
-        createInventoryItem(spiritStoneItems[0], 500), // 初始灵石：100 → 500
-        createInventoryItem(cultivationPillItems[0], 5), // 修炼丹药：3 → 5
-        createInventoryItem(breakthroughItems[0], 2), // 突破丹药：1 → 2
+        createInventoryItem(spiritStoneItems[0], 500),
+        createInventoryItem(cultivationPillItems[0], 5),
+        createInventoryItem(breakthroughItems[0], 2),
       ];
-      
-      // 根据身世属性计算初始装备和功法品质
-      const character = prev.selectedCharacter;
-      
+
       // 计算身世总权重（出身和天赋权重更高）
-      const backgroundWeight = 
-        (character.origin.level === 'legendary' ? 4 : 
+      const backgroundWeight =
+        (character.origin.level === 'legendary' ? 4 :
          character.origin.level === 'epic' ? 3 :
          character.origin.level === 'rare' ? 2 :
          character.origin.level === 'uncommon' ? 1 : 0) +
-        (character.talent.level === 'legendary' ? 4 : 
+        (character.talent.level === 'legendary' ? 4 :
          character.talent.level === 'epic' ? 3 :
          character.talent.level === 'rare' ? 2 :
          character.talent.level === 'uncommon' ? 1 : 0) +
-        (character.trait.level === 'legendary' ? 2 : 
+        (character.trait.level === 'legendary' ? 2 :
          character.trait.level === 'epic' ? 1.5 :
          character.trait.level === 'rare' ? 1 :
          character.trait.level === 'uncommon' ? 0.5 : 0) +
-        (character.personality.level === 'legendary' ? 2 : 
+        (character.personality.level === 'legendary' ? 2 :
          character.personality.level === 'epic' ? 1.5 :
          character.personality.level === 'rare' ? 1 :
          character.personality.level === 'uncommon' ? 0.5 : 0);
-      
+
       // 根据身世权重决定初始品质
       const getInitialRarity = (): ItemRarity => {
-        const roll = Math.random() * 12; // 最大权重约12
-        if (backgroundWeight >= 10 && roll > 8) return '史诗'; // 顶级身世有小概率史诗
-        if (backgroundWeight >= 7 && roll > 6) return '稀有'; // 高等身世有较大概率稀有
-        if (backgroundWeight >= 4 && roll > 4) return '稀有'; // 中等身世有小概率稀有
-        if (backgroundWeight >= 2 && roll > 8) return '稀有'; // 低等身世有小概率稀有
+        const roll = Math.random() * 12;
+        if (backgroundWeight >= 10 && roll > 8) return '史诗';
+        if (backgroundWeight >= 7 && roll > 6) return '稀有';
+        if (backgroundWeight >= 4 && roll > 4) return '稀有';
+        if (backgroundWeight >= 2 && roll > 8) return '稀有';
         return '普通';
       };
-      
+
       const initialRarity = getInitialRarity();
-      
+
       // 生成初始攻击功法（根据身世品质）
       const initialTechnique = generateTechniqueByType('attack', 1, world.type, initialRarity);
-      
+
       // 生成初始武器（根据身世品质，近战武器）
       const initialEquipment = generateEquipment('melee', initialRarity, world.type);
-      
+
       // 根据属性计算初始血量和法力
       const initialMaxHp = calculatePlayerMaxHp(
-        prev.selectedCharacter.stats.base.体质,
-        1, // 初始等级为1
+        character.stats.base.体质,
+        1,
         world.type
       );
       const initialMaxMp = calculatePlayerMaxMp(
-        prev.selectedCharacter.stats.base.灵根,
-        1, // 初始等级为1
+        character.stats.base.灵根,
+        1,
         world.type
       );
 
       // 生成主角
       const protagonist: Protagonist = {
-        character: prev.selectedCharacter,
+        character,
         world: world,
         backstory: backstory,
         level: 1,
         realm: '凡人',
-        stats: { ...prev.selectedCharacter.stats },
+        stats: { ...character.stats },
         statCapBonuses: { 体质: 0, 灵根: 0, 悟性: 0, 幸运: 0, 意志: 0 },
         inventory: initialInventory,
         activeEffects: [],
@@ -636,11 +636,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         maxHp: initialMaxHp,
         currentMp: initialMaxMp,
         maxMp: initialMaxMp,
-        techniques: [initialTechnique], // 初始功法
-        equippedAttackTechniques: [initialTechnique, null, null], // 自动装备到第一个槽位
+        techniques: [initialTechnique],
+        equippedAttackTechniques: [initialTechnique, null, null],
         equippedDefenseTechniques: [null, null, null],
-        equipments: [initialEquipment], // 初始装备
-        equippedMelee: initialEquipment, // 自动装备武器
+        equipments: [initialEquipment],
+        equippedMelee: initialEquipment,
         equippedRanged: null,
         equippedHead: null,
         equippedBody: null,
@@ -649,10 +649,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         factionId: null,
         ...DEFAULT_PROTAGONIST_EXTENSION,
       };
-      
+
       return {
         ...prev,
-        selectedWorld: world,
+        selectedCharacter: character,
         protagonist,
         phase: 'backstory',
       };

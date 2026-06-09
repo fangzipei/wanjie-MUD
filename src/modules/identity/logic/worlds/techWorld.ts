@@ -6,9 +6,10 @@
  * 探索→任务
  */
 
-import type { WorldMechanics } from './types';
 import type { BattleAction, ManualBattleState } from '@/modules/combat/logic/engine/types';
 import type { AutoBattleStrategy } from '@/modules/combat/logic/engine/types';
+
+import type { WorldMechanics } from './types';
 
 /** 科技世界机制 */
 export const techWorld: WorldMechanics = {
@@ -68,4 +69,11 @@ export const techWorld: WorldMechanics = {
     // 均衡：随机交替模块
     return { type: 'attack', source: 'ai' };
   },
+
+  /** 芯片研究+义体模块：科技世界的独特赛博改造体系 */
+  getUniqueMechanicDescription: () => ({
+    name: '芯片研究',
+    description: '消耗科技点研究芯片提升等级，义体模块三槽位（脑部/手臂/躯干）提供强大战斗能力，注意过热冷却。研究成功率+5%。',
+    icon: 'Cpu',
+  }),
 };

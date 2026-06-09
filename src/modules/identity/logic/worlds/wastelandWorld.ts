@@ -7,8 +7,9 @@
  * - 休息点→资源点（补给生存资源）
  */
 
-import type { WorldMechanics } from './types';
 import type { BattleAction, ManualBattleState, AutoBattleStrategy } from '@/modules/combat/logic/engine/types';
+
+import type { WorldMechanics } from './types';
 
 // ============================================
 // 生存资源系统
@@ -177,4 +178,11 @@ export const wastelandWorld: WorldMechanics = {
     if (cheapest) return { type: 'attack', techniqueId: cheapest.techniqueId, source: 'ai' };
     return { type: 'attack', source: 'ai' };
   },
+
+  /** 生存资源管理：饱腹度+水源每日消耗，探索获取补给，资源耗尽扣血 */
+  getUniqueMechanicDescription: () => ({
+    name: '生存资源',
+    description: '管理饱腹度和水源两项生存资源，每日自动消耗。探索废土获取补给，资源耗尽将损失生命。还可解锁变异能力树获得特殊能力。',
+    icon: 'Skull',
+  }),
 };

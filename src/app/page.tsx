@@ -20,7 +20,7 @@ export default function HomePage() {
 
   const handleStart = () => {
     startNewGame();
-    router.push('/character-select');
+    router.push('/world-select');
   };
 
   return (

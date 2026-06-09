@@ -22,19 +22,26 @@ export interface RealmConfig {
 /**
  * 生成每个等级的境界配置
  * 每个大境界包含10个小等级
+ *
+ * @param realmTiers - 大境界名称列表
+ * @param multiplierBase - 战力倍率基础
+ * @param subRealmMult - 小境界倍率（默认 1.05）
+ * @param tierJumpMult - 大境界跨越倍率（默认 1.30）
  */
 function generateRealmConfigs(
-  realmTiers: string[],  // 大境界名称列表
-  multiplierBase: number = 1.0  // 战力倍率基础
+  realmTiers: string[],
+  multiplierBase: number = 1.0,
+  subRealmMult: number = 1.05,
+  tierJumpMult: number = 1.30
 ): RealmConfig[] {
   const configs: RealmConfig[] = [];
   let currentMultiplier = multiplierBase;
-  
+
   for (let tierIndex = 0; tierIndex < realmTiers.length; tierIndex++) {
     const tierName = realmTiers[tierIndex];
     const startLevel = tierIndex * 10 + 1;
     const endLevel = (tierIndex + 1) * 10;
-    
+
     for (let level = startLevel; level <= endLevel; level++) {
       const tierLevel = level - startLevel + 1;  // 大境界内的等级 (1-10)
       configs.push({
@@ -42,15 +49,14 @@ function generateRealmConfigs(
         realm: `${tierName}${['一重', '二重', '三重', '四重', '五重', '六重', '七重', '八重', '九重', '圆满'][tierLevel - 1]}`,
         multiplier: Math.round(currentMultiplier * 100) / 100
       });
-      // 每小级增加约5%倍率
-      currentMultiplier *= 1.05;
+      currentMultiplier *= subRealmMult;
     }
     // 大境界跨越时额外增加倍率
     if (tierIndex < realmTiers.length - 1) {
-      currentMultiplier *= 1.3;
+      currentMultiplier *= tierJumpMult;
     }
   }
-  
+
   return configs;
 }
 
@@ -66,16 +72,28 @@ const realmTierNames: Record<WorldType, string[]> = {
   '末世': ['幸存者', '觉醒者', '进化者', '变异者', '异能者', '掌控者', '主宰者', '王者', '皇者', '圣者'],
 };
 
-// 生成各世界的境界配置
+/** 世界境界倍率配置 — 每种世界有差异化的成长曲线 */
+export const WORLD_REALM_MULTIPLIERS: Record<WorldType, { subRealm: number; tierJump: number }> = {
+  '修仙': { subRealm: 1.05, tierJump: 1.30 },   // 标准修仙成长
+  '仙侠': { subRealm: 1.05, tierJump: 1.30 },   // 标准剑修成长
+  '高武': { subRealm: 1.06, tierJump: 1.35 },   // 武道爆发式突破
+  '科技': { subRealm: 1.03, tierJump: 1.20 },   // 科技研究稳定渐进
+  '魔幻': { subRealm: 1.06, tierJump: 1.30 },   // 魔法感悟式成长
+  '异能': { subRealm: 1.04, tierJump: 1.40 },   // 觉醒跃迁式突破
+  '武侠': { subRealm: 1.05, tierJump: 1.25 },   // 勤学苦练式成长
+  '末世': { subRealm: 1.08, tierJump: 1.50 },   // 极端环境快速进化
+};
+
+// 生成各世界的境界配置（使用差异化倍率）
 export const worldRealms: Record<WorldType, RealmConfig[]> = {
-  '修仙': generateRealmConfigs(realmTierNames['修仙']),
-  '高武': generateRealmConfigs(realmTierNames['高武']),
-  '科技': generateRealmConfigs(realmTierNames['科技']),
-  '魔幻': generateRealmConfigs(realmTierNames['魔幻']),
-  '异能': generateRealmConfigs(realmTierNames['异能']),
-  '仙侠': generateRealmConfigs(realmTierNames['仙侠']),
-  '武侠': generateRealmConfigs(realmTierNames['武侠']),
-  '末世': generateRealmConfigs(realmTierNames['末世']),
+  '修仙': generateRealmConfigs(realmTierNames['修仙'], 1.0, WORLD_REALM_MULTIPLIERS['修仙'].subRealm, WORLD_REALM_MULTIPLIERS['修仙'].tierJump),
+  '高武': generateRealmConfigs(realmTierNames['高武'], 1.0, WORLD_REALM_MULTIPLIERS['高武'].subRealm, WORLD_REALM_MULTIPLIERS['高武'].tierJump),
+  '科技': generateRealmConfigs(realmTierNames['科技'], 1.0, WORLD_REALM_MULTIPLIERS['科技'].subRealm, WORLD_REALM_MULTIPLIERS['科技'].tierJump),
+  '魔幻': generateRealmConfigs(realmTierNames['魔幻'], 1.0, WORLD_REALM_MULTIPLIERS['魔幻'].subRealm, WORLD_REALM_MULTIPLIERS['魔幻'].tierJump),
+  '异能': generateRealmConfigs(realmTierNames['异能'], 1.0, WORLD_REALM_MULTIPLIERS['异能'].subRealm, WORLD_REALM_MULTIPLIERS['异能'].tierJump),
+  '仙侠': generateRealmConfigs(realmTierNames['仙侠'], 1.0, WORLD_REALM_MULTIPLIERS['仙侠'].subRealm, WORLD_REALM_MULTIPLIERS['仙侠'].tierJump),
+  '武侠': generateRealmConfigs(realmTierNames['武侠'], 1.0, WORLD_REALM_MULTIPLIERS['武侠'].subRealm, WORLD_REALM_MULTIPLIERS['武侠'].tierJump),
+  '末世': generateRealmConfigs(realmTierNames['末世'], 1.0, WORLD_REALM_MULTIPLIERS['末世'].subRealm, WORLD_REALM_MULTIPLIERS['末世'].tierJump),
 };
 
 /**

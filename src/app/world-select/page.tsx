@@ -13,18 +13,18 @@ export default function WorldSelectPage() {
 
   // Redirect if not in world-select phase
   useEffect(() => {
-    if (!gameState.selectedCharacter) {
+    if (gameState.phase === 'playing' && gameState.protagonist) {
+      router.replace('/game');
+    } else if (gameState.phase === 'character-select' && gameState.selectedWorld) {
       router.replace('/character-select');
     } else if (gameState.phase === 'backstory' && gameState.protagonist) {
       router.replace('/backstory');
-    } else if (gameState.phase === 'playing' && gameState.protagonist) {
-      router.replace('/game');
     }
-  }, [gameState.phase, gameState.selectedCharacter, gameState.protagonist, router]);
+  }, [gameState.phase, gameState.protagonist, gameState.selectedWorld, router]);
 
   const handleSelect = (world: Parameters<typeof selectWorld>[0]) => {
     selectWorld(world);
-    router.push('/backstory');
+    router.push('/character-select');
   };
 
   return (

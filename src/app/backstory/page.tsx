@@ -14,15 +14,17 @@ export default function BackstoryPage() {
   // Redirect if not in backstory phase
   useEffect(() => {
     if (!gameState.protagonist) {
-      if (gameState.selectedCharacter) {
-        router.replace('/world-select');
+      if (gameState.selectedCharacter && gameState.selectedWorld) {
+        router.replace('/character-select');
+      } else if (gameState.selectedWorld) {
+        router.replace('/character-select');
       } else {
-        router.replace('/');
+        router.replace('/world-select');
       }
     } else if (gameState.phase === 'playing') {
       router.replace('/game');
     }
-  }, [gameState.phase, gameState.protagonist, gameState.selectedCharacter, router]);
+  }, [gameState.phase, gameState.protagonist, gameState.selectedCharacter, gameState.selectedWorld, router]);
 
   const handleConfirm = () => {
     confirmBackstory();
@@ -37,6 +39,9 @@ export default function BackstoryPage() {
     <BackstoryView
       backstory={gameState.protagonist.backstory}
       onConfirm={handleConfirm}
+      characterName={gameState.protagonist.character.name}
+      worldName={gameState.protagonist.world.name}
+      worldType={gameState.protagonist.world.type}
     />
   );
 }

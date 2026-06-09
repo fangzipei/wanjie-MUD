@@ -786,7 +786,7 @@ export const UPGRADE_CONFIG = {
 };
 
 // 游戏阶段
-export type GamePhase = 'character-select' | 'world-select' | 'backstory' | 'playing';
+export type GamePhase = 'world-select' | 'character-select' | 'backstory' | 'playing';
 
 // 修炼结果
 export interface CultivationResult {

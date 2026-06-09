@@ -10,7 +10,7 @@ import { DEFAULT_ASCENSION_FLOW_STATE } from '@/shared/lib/typesExtension';
 /** 创建初始游戏状态 */
 export function createInitialGameState(): GameState {
   return {
-    phase: 'character-select',
+    phase: 'world-select',
     characters: [],
     worlds: [],
     selectedCharacter: null,

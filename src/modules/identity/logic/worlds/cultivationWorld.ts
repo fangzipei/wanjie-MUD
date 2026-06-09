@@ -5,7 +5,6 @@
  */
 
 import type { WorldMechanics } from './types';
-import { getTerminology } from '@/modules/narrative/logic/terminology';
 
 /** 修仙世界机制 */
 export const cultivationWorld: WorldMechanics = {
@@ -28,5 +27,12 @@ export const cultivationWorld: WorldMechanics = {
   getExplorationParams: () => ({
     exploreName: '历练',
     hasSpecialMechanics: false,
+  }),
+
+  /** 修仙是入门世界，无独特机制，提供最纯粹的基础修行体验 */
+  getUniqueMechanicDescription: () => ({
+    name: '入门修行',
+    description: '修仙世界是万界之旅的起点，提供最纯粹的基础修行体验。炼气化神，追求长生大道。适合新玩家熟悉游戏核心系统。',
+    icon: 'Sparkles',
   }),
 };

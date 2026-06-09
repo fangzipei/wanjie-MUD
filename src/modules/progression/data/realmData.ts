@@ -23,24 +23,63 @@ import { getRealmName, getRealmMultiplier } from './realmCore';
 // 小境界体系（可与任意大境界体系搭配）
 // ============================================
 
-export const SUB_REALM_SYSTEMS: Record<string, string[]> = {
-  // 传统修仙风格
-  '一至九重': ['一重', '二重', '三重', '四重', '五重', '六重', '七重', '八重', '九重', '圆满'],
-  '初期至大圆满': ['初期', '初期', '中期', '中期', '后期', '后期', '巅峰', '巅峰', '极限', '大圆满'],
-  '入门至大成': ['入门', '初窥', '小成', '入门', '初窥', '小成', '大成', '大成', '圆满', '大成'],
-  
-  // 简洁风格
+// 通用小境界（兜底使用，确保每种世界类型至少 2 种可选）
+const COMMON_SUB_REALMS = {
   '一二三四阶': ['一阶', '二阶', '三阶', '四阶', '五阶', '六阶', '七阶', '八阶', '九阶', '十阶'],
   '星级': ['一星', '二星', '三星', '四星', '五星', '六星', '七星', '八星', '九星', '十星'],
-  '品级': ['九品', '八品', '七品', '六品', '五品', '四品', '三品', '二品', '一品', '极品'],
-  
-  // 等级风格
-  'LV等级': ['LV1', 'LV2', 'LV3', 'LV4', 'LV5', 'LV6', 'LV7', 'LV8', 'LV9', 'LV10'],
   '数字层': ['第一层', '第二层', '第三层', '第四层', '第五层', '第六层', '第七层', '第八层', '第九层', '第十层'],
 };
 
-// 默认小境界体系名称列表
-export const DEFAULT_SUB_REALM_NAMES = Object.keys(SUB_REALM_SYSTEMS);
+export const SUB_REALM_SYSTEMS: Record<WorldType, Record<string, string[]>> = {
+  '修仙': {
+    '一至九重': ['一重', '二重', '三重', '四重', '五重', '六重', '七重', '八重', '九重', '圆满'],
+    '初期至大圆满': ['初期', '中期', '后期', '巅峰', '极限', '大圆满', '圆满', '大成', '圆满', '归一'],
+    '入门至大成': ['入门', '初窥', '小成', '精通', '大成', '圆满', '入微', '天人', '化境', '造化'],
+    ...COMMON_SUB_REALMS,
+  },
+  '仙侠': {
+    '一至九重': ['一重', '二重', '三重', '四重', '五重', '六重', '七重', '八重', '九重', '圆满'],
+    '初期至大圆满': ['初期', '中期', '后期', '巅峰', '圆满', '大成', '真意', '归真', '化境', '飞升'],
+    '入门至大成': ['入门', '初窥', '小成', '精通', '大成', '圆满', '入道', '通神', '化境', '证道'],
+    ...COMMON_SUB_REALMS,
+  },
+  '高武': {
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+    '星级': COMMON_SUB_REALMS['星级'],
+    '数字层': COMMON_SUB_REALMS['数字层'],
+  },
+  '武侠': {
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+    '星级': COMMON_SUB_REALMS['星级'],
+    '数字层': COMMON_SUB_REALMS['数字层'],
+  },
+  '科技': {
+    'LV等级': ['LV1', 'LV2', 'LV3', 'LV4', 'LV5', 'LV6', 'LV7', 'LV8', 'LV9', 'LV10'],
+    '品级': ['九品', '八品', '七品', '六品', '五品', '四品', '三品', '二品', '一品', '极品'],
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+    '星级': COMMON_SUB_REALMS['星级'],
+  },
+  '魔幻': {
+    '星级': COMMON_SUB_REALMS['星级'],
+    '品级': ['九品', '八品', '七品', '六品', '五品', '四品', '三品', '二品', '一品', '极品'],
+    '数字层': COMMON_SUB_REALMS['数字层'],
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+  },
+  '异能': {
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+    '星级': COMMON_SUB_REALMS['星级'],
+    '数字层': COMMON_SUB_REALMS['数字层'],
+  },
+  '末世': {
+    '一二三四阶': COMMON_SUB_REALMS['一二三四阶'],
+    '数字层': COMMON_SUB_REALMS['数字层'],
+    'LV等级': ['LV1', 'LV2', 'LV3', 'LV4', 'LV5', 'LV6', 'LV7', 'LV8', 'LV9', 'LV10'],
+    '星级': COMMON_SUB_REALMS['星级'],
+  },
+};
+
+// 默认小境界体系名称列表（修仙）
+export const DEFAULT_SUB_REALM_NAMES = Object.keys(SUB_REALM_SYSTEMS['修仙']);
 
 // ============================================
 // 大境界体系（按世界类型分类）
@@ -123,10 +162,11 @@ export function generateRealmSystem(worldType: WorldType): RealmSystem {
   const mainRealms = MAIN_REALM_SYSTEMS[worldType];
   const mainRealmName = randomKey(mainRealms);
   const mainRealmTiers = mainRealms[mainRealmName];
-  
-  // 随机选择小境界体系
-  const subRealmName = randomKey(SUB_REALM_SYSTEMS);
-  const subRealms = SUB_REALM_SYSTEMS[subRealmName];
+
+  // 从世界限定的小境界体系中随机选择（兜底使用通用体系）
+  const worldSubRealms = SUB_REALM_SYSTEMS[worldType] || SUB_REALM_SYSTEMS['修仙'];
+  const subRealmName = randomKey(worldSubRealms);
+  const subRealms = worldSubRealms[subRealmName];
   
   // 组合生成完整境界层级
   const tiers: RealmTier[] = mainRealmTiers.map((tierName, index) => {

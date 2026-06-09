@@ -27,6 +27,10 @@ export interface RealmSystem {
   subRealmName: string;
   /** 所有境界层级 */
   tiers: RealmTier[];
+  /** 小境界倍率（默认 1.05，未设置时使用） */
+  subRealmMultiplier?: number;
+  /** 大境界跨越倍率（默认 1.30，未设置时使用） */
+  tierJumpMultiplier?: number;
 }
 
 // ============================================
@@ -138,9 +142,15 @@ export function getPowerSystemDescription(realmSystem: RealmSystem | undefined):
 
 /**
  * 计算战力倍率
- * 每个小境界增加5%，每个大境界跨越额外增加30%
+ *
+ * 使用 RealmSystem 上配置的自定义倍率（若有），未设置时使用默认值：
+ * - subRealmMultiplier 默认 1.05（每个小境界倍率）
+ * - tierJumpMultiplier 默认 1.30（大境界跨越倍率）
  */
 export function getRealmMultiplier(realmSystem: RealmSystem | undefined, level: number): number {
+  const subRealmMult = realmSystem?.subRealmMultiplier ?? 1.05;
+  const tierJumpMult = realmSystem?.tierJumpMultiplier ?? 1.30;
+
   if (!realmSystem || !realmSystem.tiers || realmSystem.tiers.length === 0) {
     return 1 + level * 0.05;
   }
@@ -155,10 +165,10 @@ export function getRealmMultiplier(realmSystem: RealmSystem | undefined, level: 
     }
 
     const levelsInTier = Math.min(level, tier.levelRange[1]) - tier.levelRange[0] + 1;
-    multiplier *= Math.pow(1.05, levelsInTier);
+    multiplier *= Math.pow(subRealmMult, levelsInTier);
 
     if (level > tier.levelRange[1] && i < realmSystem.tiers.length - 1) {
-      multiplier *= 1.3;
+      multiplier *= tierJumpMult;
     }
   }
 
