@@ -18,7 +18,7 @@ import {
 } from '@/shared/ui/select';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
 import { EQUIPMENT_SETS, EquipmentAffix } from '@/modules/equipment/data/equipmentAffixData';
-import { getElementIcon, getWeaponCategoryIcon } from '@/modules/combat/logic/restraintSystem';
+import { getElementIcon, getWeaponCategoryIcon, type Element, type WeaponCategory } from '@/modules/combat/logic/restraintSystem';
 import { Equipment, EquipmentSlot, ItemRarity, UPGRADE_CONFIG, ELEMENT_NAMES, WEAPON_CATEGORY_NAMES } from '@/shared/lib/types';
 
 interface EquipmentPanelProps {
@@ -96,17 +96,17 @@ function EquipmentSlotCard({
       element={equipment.element ? (
         <span className="flex items-center gap-1">
           {getElementIcon(equipment.element)}
-          <span>{ELEMENT_NAMES[equipment.element]}</span>
+          <span>{ELEMENT_NAMES[equipment.element as Element]}</span>
         </span>
       ) : undefined}
       compatibleElement={equipment.compatibleElement ? {
-        name: ELEMENT_NAMES[equipment.compatibleElement],
+        name: ELEMENT_NAMES[equipment.compatibleElement as Element],
         bonus: equipment.compatibleBonus,
       } : undefined}
       weaponCategory={equipment.weaponCategory ? (
         <span className="flex items-center gap-1">
           {getWeaponCategoryIcon(equipment.weaponCategory)}
-          <span>{WEAPON_CATEGORY_NAMES[equipment.weaponCategory]}</span>
+          <span>{WEAPON_CATEGORY_NAMES[equipment.weaponCategory as WeaponCategory]}</span>
         </span>
       ) : undefined}
       techniqueSlots={{
@@ -190,17 +190,17 @@ function EquipmentItem({
       element={equipment.element ? (
         <span className="flex items-center gap-1">
           {getElementIcon(equipment.element)}
-          <span>{ELEMENT_NAMES[equipment.element]}</span>
+          <span>{ELEMENT_NAMES[equipment.element as Element]}</span>
         </span>
       ) : undefined}
       compatibleElement={equipment.compatibleElement ? {
-        name: ELEMENT_NAMES[equipment.compatibleElement],
+        name: ELEMENT_NAMES[equipment.compatibleElement as Element],
         bonus: equipment.compatibleBonus,
       } : undefined}
       weaponCategory={equipment.weaponCategory ? (
         <span className="flex items-center gap-1">
           {getWeaponCategoryIcon(equipment.weaponCategory)}
-          <span>{WEAPON_CATEGORY_NAMES[equipment.weaponCategory]}</span>
+          <span>{WEAPON_CATEGORY_NAMES[equipment.weaponCategory as WeaponCategory]}</span>
         </span>
       ) : undefined}
       techniqueSlots={{
