@@ -339,8 +339,46 @@ export interface CharacterEvaluation {
   hints: string[];
 }
 
+// ============================================
 // 世界类型
+// ============================================
+
+/**
+ * WorldType 品牌符号（Mod 可扩展类型）
+ *
+ * 品牌字符串类型，支持通过 Mod 系统扩展新的世界类型。
+ * 通过 asWorldType() 工厂函数在运行时校验。
+ *
+ * 迁移说明：当前 WorldType 仍保留为联合类型以兼容已有代码。
+ * 消费者逐步迁移到使用此品牌类型 + asWorldType()。
+ * 迁移完成后，WorldType 将改为品牌类型，联合类型将移除。
+ */
+declare const WorldTypeBrand: unique symbol;
+
+/**
+ * 可扩展世界类型（品牌字符串）
+ *
+ * 用于新代码和 Mod 系统中的世界类型值。
+ * 通过 shared/lib/registry 的 asWorldType() 工厂函数创建。
+ */
+export type ExtensibleWorldType = string & { [WorldTypeBrand]: true };
+
+/**
+ * 世界类型（联合，当前主类型）
+ *
+ * 8 种内置世界类型。新世界类型将通过 Mod 系统注册。
+ *
+ * @deprecated 新代码应使用 ExtensibleWorldType + asWorldType()
+ * 迁移完成后此类型将改为品牌字符串。
+ */
 export type WorldType = '修仙' | '高武' | '科技' | '魔幻' | '异能' | '仙侠' | '武侠' | '末世';
+
+/**
+ * 8 个内置世界类型常量
+ */
+export const BUILTIN_WORLD_TYPES: readonly string[] = [
+  '修仙', '高武', '科技', '魔幻', '异能', '仙侠', '武侠', '末世',
+] as const;
 
 // 世界难度等级（由世界系数决定）
 export type WorldDifficulty = '简单' | '普通' | '困难' | '噩梦' | '地狱' | '深渊';

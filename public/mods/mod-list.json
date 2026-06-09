@@ -1,0 +1,12 @@
+{
+  "mods": [
+    {
+      "id": "wanjie-core",
+      "path": "wanjie-core"
+    },
+    {
+      "id": "wanjie-template",
+      "path": "wanjie-template"
+    }
+  ]
+}

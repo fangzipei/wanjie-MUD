@@ -1,0 +1,29 @@
+{
+  "opportunities": [
+    {
+      "id": "dream_revelation",
+      "type": "stat_buff",
+      "name": "梦境启示",
+      "description": "在幻境中获得神秘启示，领悟力提升",
+      "triggerCondition": { "type": "on_enter", "chance": 1.0 },
+      "effect": { "statModifications": { "悟性": 2 } },
+      "duration": -1,
+      "opportunityLevel": 1,
+      "worldTypes": ["huanjing"]
+    },
+    {
+      "id": "illusion_treasure",
+      "type": "rare_drop",
+      "name": "幻境秘宝",
+      "description": "幻境深处隐藏着稀有的宝物",
+      "triggerCondition": { "type": "on_explore", "chance": 0.15 },
+      "effect": {
+        "specialEffects": { "type": "extra_loot", "value": 1 },
+        "dropBonus": { "rarityBoost": 1, "extraDropChance": 0.15 }
+      },
+      "duration": 0,
+      "opportunityLevel": 2,
+      "worldTypes": ["huanjing"]
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "dangers": [
+    {
+      "id": "weak_lingqi",
+      "type": "stat_debuff",
+      "name": "灵气稀薄",
+      "description": "此方天地灵气稀薄，修炼效率降低",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "灵根": -1
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 1
+    },
+    {
+      "id": "chaotic_elements",
+      "type": "stat_debuff",
+      "name": "元素紊乱",
+      "description": "元素之力紊乱，战斗能力略微下降",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "体质": -1
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 1
+    },
+    {
+      "id": "restless_mind",
+      "type": "stat_debuff",
+      "name": "心神不宁",
+      "description": "此地磁场异常，心神难以安定",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "悟性": -1
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 1
+    },
+    {
+      "id": "demon_erosion",
+      "type": "resource_drain",
+      "name": "魔气侵蚀",
+      "description": "魔气弥漫，每回合损失少量生命",
+      "triggerCondition": {
+        "type": "on_turn",
+        "chance": 0.3
+      },
+      "effect": {
+        "resourceModifications": {
+          "hp": -5
+        }
+      },
+      "duration": 0,
+      "dispellable": true,
+      "dangerLevel": 2
+    },
+    {
+      "id": "spirit_drain",
+      "type": "resource_drain",
+      "name": "灵力枯竭",
+      "description": "灵力流失加剧，每回合损失法力",
+      "triggerCondition": {
+        "type": "on_turn",
+        "chance": 0.25
+      },
+      "effect": {
+        "resourceModifications": {
+          "mp": -8
+        }
+      },
+      "duration": 0,
+      "dispellable": true,
+      "dangerLevel": 2
+    },
+    {
+      "id": "weak_enemies",
+      "type": "enemy_buff",
+      "name": "敌强我弱",
+      "description": "此地敌人实力略胜一筹",
+      "triggerCondition": {
+        "type": "on_battle_start",
+        "chance": 1
+      },
+      "effect": {
+        "enemyBuffs": {
+          "attackBonus": 0.1,
+          "defenseBonus": 0.1
+        }
+      },
+      "duration": 0,
+      "dispellable": false,
+      "dangerLevel": 2
+    },
+    {
+      "id": "reduced_insight",
+      "type": "stat_debuff",
+      "name": "悟性压制",
+      "description": "天机混乱，领悟效率下降",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "悟性": -2,
+          "灵根": -1
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 2
+    },
+    {
+      "id": "enemy_territory",
+      "type": "enemy_buff",
+      "name": "敌人领地",
+      "description": "此处为敌人领地，敌人战斗力提升20%",
+      "triggerCondition": {
+        "type": "on_battle_start",
+        "chance": 1
+      },
+      "effect": {
+        "enemyBuffs": {
+          "attackBonus": 0.2,
+          "defenseBonus": 0.15,
+          "hpBonus": 0.15
+        }
+      },
+      "duration": 0,
+      "dispellable": false,
+      "dangerLevel": 3
+    },
+    {
+      "id": "cursed_ground",
+      "type": "resource_drain",
+      "name": "诅咒之地",
+      "description": "受到诅咒，每回合损失生命和法力",
+      "triggerCondition": {
+        "type": "on_turn",
+        "chance": 0.4
+      },
+      "effect": {
+        "resourceModifications": {
+          "hp": -8,
+          "mp": -5
+        }
+      },
+      "duration": 0,
+      "dispellable": true,
+      "dangerLevel": 3
+    },
+    {
+      "id": "exp_reduction",
+      "type": "special_mechanic",
+      "name": "天道压制",
+      "description": "此方天道排斥外来者，经验获取减少20%",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "specialEffects": {
+          "type": "reduced_exp",
+          "value": 0.2
+        }
+      },
+      "duration": -1,
+      "dispellable": false,
+      "dangerLevel": 3
+    }
+  ]
+}

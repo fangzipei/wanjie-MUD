@@ -1,0 +1,20 @@
+{
+  "id": "wanjie-template",
+  "name": "示例 Mod 模板",
+  "version": "0.1.0",
+  "description": "一个示例 Mod 模板，展示如何为万界修行录创建新的世界类型。复制此目录并修改即可开始创作。详细说明请看 README.md。",
+  "author": "你的名字",
+  "gameVersion": ">=1.0.0",
+  "dependencies": ["wanjie-core"],
+  "contentTypes": ["world", "traits", "dangers", "opportunities", "realms", "factions", "names", "text"],
+  "dataFiles": {
+    "world": "data/world.json",
+    "traits": "data/traits.json",
+    "dangers": "data/dangers.json",
+    "opportunities": "data/opportunities.json",
+    "realms": "data/realm.json",
+    "factions": "data/factions.json",
+    "names": "data/names.json",
+    "text": "data/text.json"
+  }
+}

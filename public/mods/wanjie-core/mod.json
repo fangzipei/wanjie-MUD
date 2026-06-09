@@ -1,0 +1,30 @@
+{
+  "id": "wanjie-core",
+  "name": "万界核心数据",
+  "version": "1.0.0",
+  "description": "万界修行录的 8 个内置世界类型的核心数据。此 Mod 始终加载且不可禁用。",
+  "author": "万界开发组",
+  "gameVersion": ">=1.0.0",
+  "dependencies": [],
+  "required": true,
+  "contentTypes": [
+    "world",
+    "traits",
+    "dangers",
+    "opportunities",
+    "realms",
+    "factions",
+    "names",
+    "text"
+  ],
+  "dataFiles": {
+    "world": "data/worlds.json",
+    "traits": "data/traits.json",
+    "dangers": "data/dangers.json",
+    "opportunities": "data/opportunities.json",
+    "realms": "data/realms.json",
+    "factions": "data/factions.json",
+    "names": "data/names.json",
+    "text": "data/text.json"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "dangers": [
+    {
+      "id": "illusion_maze",
+      "type": "special_mechanic",
+      "name": "幻境迷宫",
+      "description": "陷入幻境迷宫，每回合有概率迷失方向",
+      "triggerCondition": { "type": "on_turn", "chance": 0.2 },
+      "effect": {
+        "specialEffects": { "type": "reduced_exp", "value": 0.15 }
+      },
+      "duration": 0,
+      "dispellable": true,
+      "dangerLevel": 2,
+      "worldTypes": ["huanjing"]
+    },
+    {
+      "id": "dream_drain",
+      "type": "resource_drain",
+      "name": "梦境汲取",
+      "description": "梦境生物汲取生命能量",
+      "triggerCondition": { "type": "on_turn", "chance": 0.25 },
+      "effect": {
+        "resourceModifications": { "hp": -6, "mp": -4 }
+      },
+      "duration": 0,
+      "dispellable": true,
+      "dangerLevel": 2,
+      "worldTypes": ["huanjing"]
+    }
+  ]
+}

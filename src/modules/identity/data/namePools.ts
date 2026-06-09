@@ -5,6 +5,7 @@
  * 数据与逻辑分离——generators.ts 从此文件导入姓名数据。
  */
 import type { WorldType } from '@/shared/lib/types';
+import { WorldDataRegistry } from '@/shared/lib/registry';
 
 export interface NamePool {
   surnames: string[];
@@ -61,7 +62,22 @@ const WASTELAND_NAMES: NamePool = {
   femaleNames: ['牙', '爪', '刃', '箭', '镖', '针', '狐', '猫', '燕', '隼', '蝎', '蜂'],
 };
 
-/** 世界姓名池映射 */
+/**
+ * 从注册中心获取姓名池
+ *
+ * @param worldType - 世界类型标识
+ * @returns 姓名池数据，未加载时抛出错误
+ */
+export function getNamePoolFromRegistry(worldType: string): NamePool {
+  const registry = WorldDataRegistry.getInstance();
+  const pool = registry.getNamePool(worldType);
+  if (!pool) {
+    throw new Error(`姓名池未加载: "${worldType}"。请确保 wanjie-core Mod 已正确加载。`);
+  }
+  return pool;
+}
+
+/** @deprecated 使用 getNamePoolFromRegistry() 替代 */
 export const WORLD_NAME_POOLS: Record<WorldType, NamePool> = {
   '修仙': CULTIVATION_NAMES,
   '仙侠': XIANXIA_NAMES,

@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   // 尾部斜杠，兼容 GitHub Pages 路由
   trailingSlash: true,
 
+  // 指定工作区根目录，避免多 lockfile 警告
+  turbopack: {
+    root: __dirname,
+  },
+
   // GitHub Pages 仓库路径前缀（仅生产环境）
   basePath: isDev ? '' : '/wanjie-MUD',
 

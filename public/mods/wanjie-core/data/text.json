@@ -1,0 +1,298 @@
+{
+  "修仙": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "修炼",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "高武": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "修炼",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "科技": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "能量块",
+      "power": "能量",
+      "cultivation": "进化",
+      "breakthrough": "突破限制"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "魔幻": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "魔力晶石",
+      "power": "魔力",
+      "cultivation": "修炼",
+      "breakthrough": "突破位阶"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "异能": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "修炼",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "仙侠": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "修炼",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "武侠": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "修炼",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  },
+  "末世": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "灵根",
+      "comprehension": "悟性",
+      "luck": "幸运",
+      "willpower": "意志"
+    },
+    "terminology": {
+      "resource": "灵石",
+      "power": "灵力",
+      "cultivation": "变异",
+      "breakthrough": "突破"
+    },
+    "paths": {
+      "body": {
+        "name": "体修",
+        "description": "以身体力量为本的修行之道"
+      },
+      "spiritRoot": {
+        "name": "灵修",
+        "description": "以灵力为核心的修行之道"
+      },
+      "comprehension": {
+        "name": "悟道",
+        "description": "以悟性为根基的修行之道"
+      },
+      "luck": {
+        "name": "气运",
+        "description": "以气运为根基的修行之道"
+      },
+      "willpower": {
+        "name": "意志",
+        "description": "以意志力为核心的修行之道"
+      }
+    }
+  }
+}

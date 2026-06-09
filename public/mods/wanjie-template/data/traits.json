@@ -1,0 +1,72 @@
+{
+  "huanjing": {
+    "origin": {
+      "legendary": [],
+      "epic": [
+        {
+          "name": "幻境原住民",
+          "description": "生于幻境、长于幻境，对虚实之道有天生的感知",
+          "level": "epic",
+          "positiveAttrs": ["悟性", "幸运"],
+          "negativeAttrs": ["体质"]
+        }
+      ],
+      "rare": [
+        {
+          "name": "梦境旅者",
+          "description": "曾穿梭于无数梦境之间，见多识广",
+          "level": "rare",
+          "positiveAttrs": ["悟性"],
+          "negativeAttrs": ["意志"]
+        }
+      ],
+      "uncommon": [],
+      "common": []
+    },
+    "trait": {
+      "legendary": [],
+      "epic": [],
+      "rare": [
+        {
+          "name": "幻视之眼",
+          "description": "能够看穿幻象，洞察真实",
+          "level": "rare",
+          "positiveAttrs": ["悟性"],
+          "negativeAttrs": ["体质"]
+        }
+      ],
+      "uncommon": [],
+      "common": []
+    },
+    "personality": {
+      "legendary": [],
+      "epic": [],
+      "rare": [],
+      "uncommon": [
+        {
+          "name": "谨慎",
+          "description": "遇事三思，不容易被迷惑",
+          "level": "uncommon",
+          "positiveAttrs": ["意志"],
+          "negativeAttrs": ["幸运"]
+        }
+      ],
+      "common": []
+    },
+    "talent": {
+      "legendary": [],
+      "epic": [],
+      "rare": [
+        {
+          "name": "虚实转换",
+          "description": "能在虚实之间自由转换的天赋",
+          "level": "rare",
+          "positiveAttrs": ["悟性", "灵根"],
+          "negativeAttrs": []
+        }
+      ],
+      "uncommon": [],
+      "common": []
+    }
+  }
+}

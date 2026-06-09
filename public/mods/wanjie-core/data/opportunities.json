@@ -1,0 +1,58 @@
+{
+  "opportunities": [
+    {
+      "id": "abundant_lingqi",
+      "type": "stat_buff",
+      "name": "灵气充沛",
+      "description": "此地灵气充沛，修炼效率提升",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "灵根": 2
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 1,
+      "conflictsWith": [
+        "weak_lingqi"
+      ]
+    },
+    {
+      "id": "harmonious_elements",
+      "type": "stat_buff",
+      "name": "元素和谐",
+      "description": "元素之力和谐，战斗能力略微提升",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "体质": 2
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 1
+    },
+    {
+      "id": "clear_mind",
+      "type": "stat_buff",
+      "name": "心神清明",
+      "description": "此地磁场温和，心神安定",
+      "triggerCondition": {
+        "type": "on_enter",
+        "chance": 1
+      },
+      "effect": {
+        "statModifications": {
+          "悟性": 2
+        }
+      },
+      "duration": -1,
+      "opportunityLevel": 1
+    }
+  ]
+}

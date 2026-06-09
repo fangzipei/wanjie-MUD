@@ -1,0 +1,24 @@
+{
+  "huanjing": {
+    "stats": {
+      "body": "体质",
+      "spiritRoot": "幻根",
+      "comprehension": "洞悉",
+      "luck": "机缘",
+      "willpower": "定力"
+    },
+    "terminology": {
+      "resource": "梦晶",
+      "power": "幻力",
+      "cultivation": "炼虚",
+      "breakthrough": "破境"
+    },
+    "paths": {
+      "body": { "name": "实修", "description": "强化肉身体魄，以实体对抗幻象" },
+      "spiritRoot": { "name": "幻修", "description": "以幻力为本，掌控虚实之道" },
+      "comprehension": { "name": "悟道", "description": "洞悉万象，在幻境中寻求真理" },
+      "luck": { "name": "命修", "description": "顺应天机命运，气运加身" },
+      "willpower": { "name": "定修", "description": "以意志之力安定心神，不为外物所动" }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "factions": [
+    {
+      "id": "huanjing_dream_keepers",
+      "name": "守梦者",
+      "type": "组织",
+      "description": "守护幻境边界的古老组织，维持梦境与现实的平衡",
+      "worldTypeId": "huanjing"
+    },
+    {
+      "id": "huanjing_illusion_sect",
+      "name": "幻象宗",
+      "type": "宗门",
+      "description": "以幻术闻名的宗门，门下弟子皆精通虚实之道",
+      "worldTypeId": "huanjing"
+    },
+    {
+      "id": "huanjing_nightmare_guild",
+      "name": "梦魇会",
+      "type": "教派",
+      "description": "信奉噩梦之力的神秘教派，追求极致的幻象力量",
+      "worldTypeId": "huanjing"
+    }
+  ]
+}

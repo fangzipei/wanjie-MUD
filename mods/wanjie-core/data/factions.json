@@ -1,0 +1,202 @@
+{
+  "修仙": {
+    "templates": [
+      {
+        "id": "修仙_faction_0",
+        "name": "五大仙门各据一方，暗流涌动",
+        "type": "修仙",
+        "description": "修仙世界的主要势力",
+        "worldTypeId": "修仙"
+      },
+      {
+        "id": "修仙_faction_1",
+        "name": "三宗两门一阁，势力错综复杂",
+        "type": "修仙",
+        "description": "修仙世界的主要势力",
+        "worldTypeId": "修仙"
+      },
+      {
+        "id": "修仙_faction_2",
+        "name": "十大宗门并立，争夺灵脉资源",
+        "type": "修仙",
+        "description": "修仙世界的主要势力",
+        "worldTypeId": "修仙"
+      }
+    ]
+  },
+  "高武": {
+    "templates": [
+      {
+        "id": "高武_faction_0",
+        "name": "三大武道圣地统领天下",
+        "type": "高武",
+        "description": "高武世界的主要势力",
+        "worldTypeId": "高武"
+      },
+      {
+        "id": "高武_faction_1",
+        "name": "五族联盟与武道宗门对峙",
+        "type": "高武",
+        "description": "高武世界的主要势力",
+        "worldTypeId": "高武"
+      },
+      {
+        "id": "高武_faction_2",
+        "name": "皇朝与宗门势力交织",
+        "type": "高武",
+        "description": "高武世界的主要势力",
+        "worldTypeId": "高武"
+      }
+    ]
+  },
+  "科技": {
+    "templates": [
+      {
+        "id": "科技_faction_0",
+        "name": "三大星际财团掌控资源",
+        "type": "科技",
+        "description": "科技世界的主要势力",
+        "worldTypeId": "科技"
+      },
+      {
+        "id": "科技_faction_1",
+        "name": "联邦政府与反叛军对峙",
+        "type": "科技",
+        "description": "科技世界的主要势力",
+        "worldTypeId": "科技"
+      },
+      {
+        "id": "科技_faction_2",
+        "name": "AI联盟与人类政权共存",
+        "type": "科技",
+        "description": "科技世界的主要势力",
+        "worldTypeId": "科技"
+      }
+    ]
+  },
+  "魔幻": {
+    "templates": [
+      {
+        "id": "魔幻_faction_0",
+        "name": "魔法议会统领各元素学派",
+        "type": "魔幻",
+        "description": "魔幻世界的主要势力",
+        "worldTypeId": "魔幻"
+      },
+      {
+        "id": "魔幻_faction_1",
+        "name": "三大帝国与精灵联盟对峙",
+        "type": "魔幻",
+        "description": "魔幻世界的主要势力",
+        "worldTypeId": "魔幻"
+      },
+      {
+        "id": "魔幻_faction_2",
+        "name": "教会与法师协会分庭抗礼",
+        "type": "魔幻",
+        "description": "魔幻世界的主要势力",
+        "worldTypeId": "魔幻"
+      }
+    ]
+  },
+  "异能": {
+    "templates": [
+      {
+        "id": "异能_faction_0",
+        "name": "异能管理局与反抗组织对立",
+        "type": "异能",
+        "description": "异能世界的主要势力",
+        "worldTypeId": "异能"
+      },
+      {
+        "id": "异能_faction_1",
+        "name": "三大财团暗中操控异能者",
+        "type": "异能",
+        "description": "异能世界的主要势力",
+        "worldTypeId": "异能"
+      },
+      {
+        "id": "异能_faction_2",
+        "name": "国际异能联盟维稳全球",
+        "type": "异能",
+        "description": "异能世界的主要势力",
+        "worldTypeId": "异能"
+      }
+    ]
+  },
+  "仙侠": {
+    "templates": [
+      {
+        "id": "仙侠_faction_0",
+        "name": "五大剑派统领剑道",
+        "type": "仙侠",
+        "description": "仙侠世界的主要势力",
+        "worldTypeId": "仙侠"
+      },
+      {
+        "id": "仙侠_faction_1",
+        "name": "剑阁与剑宗分庭抗礼",
+        "type": "仙侠",
+        "description": "仙侠世界的主要势力",
+        "worldTypeId": "仙侠"
+      },
+      {
+        "id": "仙侠_faction_2",
+        "name": "散修联盟与宗门共存",
+        "type": "仙侠",
+        "description": "仙侠世界的主要势力",
+        "worldTypeId": "仙侠"
+      }
+    ]
+  },
+  "武侠": {
+    "templates": [
+      {
+        "id": "武侠_faction_0",
+        "name": "六大门派统领武林",
+        "type": "武侠",
+        "description": "武侠世界的主要势力",
+        "worldTypeId": "武侠"
+      },
+      {
+        "id": "武侠_faction_1",
+        "name": "朝廷与江湖势力交织",
+        "type": "武侠",
+        "description": "武侠世界的主要势力",
+        "worldTypeId": "武侠"
+      },
+      {
+        "id": "武侠_faction_2",
+        "name": "帮派联盟与隐世宗门并存",
+        "type": "武侠",
+        "description": "武侠世界的主要势力",
+        "worldTypeId": "武侠"
+      }
+    ]
+  },
+  "末世": {
+    "templates": [
+      {
+        "id": "末世_faction_0",
+        "name": "幸存者联盟与掠夺者对峙",
+        "type": "末世",
+        "description": "末世世界的主要势力",
+        "worldTypeId": "末世"
+      },
+      {
+        "id": "末世_faction_1",
+        "name": "变异生物与人类争夺领地",
+        "type": "末世",
+        "description": "末世世界的主要势力",
+        "worldTypeId": "末世"
+      },
+      {
+        "id": "末世_faction_2",
+        "name": "避难所联盟掌控资源",
+        "type": "末世",
+        "description": "末世世界的主要势力",
+        "worldTypeId": "末世"
+      }
+    ]
+  }
+}

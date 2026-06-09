@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "npx tsx scripts/build-mods.ts && next build",
     "dev": "next dev",
     "lint": "eslint",
     "lint:strict": "eslint . --max-warnings 0 && bash scripts/check-file-sizes.sh",
@@ -13,7 +13,9 @@
     "ts-check": "tsc -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "build-mods": "npx tsx scripts/build-mods.ts",
+    "validate-mods": "npx tsx scripts/validate-mods.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.958.0",
