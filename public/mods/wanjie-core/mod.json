@@ -6,6 +6,7 @@
   "author": "万界开发组",
   "gameVersion": ">=1.0.0",
   "dependencies": [],
+  "required": true,
   "contentTypes": [
     "world",
     "traits",

@@ -13,6 +13,7 @@
  */
 
 import type { ImpactLevel, StatImpact, WorldType } from '@/shared/lib/types';
+import { WorldDataRegistry } from '@/shared/lib/registry';
 
 /**
  * 词条定义
@@ -451,7 +452,22 @@ const WASTELAND_TRAIT_POOL = {
   talent: WASTELAND_TALENT,
 };
 
-/** 世界词条定义映射 */
+/**
+ * 从注册中心获取词条池
+ *
+ * @param worldType - 世界类型标识
+ * @returns 词条池数据，未加载时抛出错误
+ */
+export function getTraitPoolFromRegistry(worldType: string) {
+  const registry = WorldDataRegistry.getInstance();
+  const pool = registry.getTraitPool(worldType);
+  if (!pool) {
+    throw new Error(`词条池未加载: "${worldType}"。请确保 wanjie-core Mod 已正确加载。`);
+  }
+  return pool;
+}
+
+/** @deprecated 使用 getTraitPoolFromRegistry() 替代 */
 export const WORLD_TRAIT_DEFINITIONS: Record<WorldType, {
   origin: Record<ImpactLevel, TraitDefinition[]>;
   trait: Record<ImpactLevel, TraitDefinition[]>;

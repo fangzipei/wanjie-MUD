@@ -4,16 +4,24 @@
  * 玩家和敌人的数值都基于世界的属性进行计算
  */
 
-import { WorldType, WorldImpact, StatImpact, CellType, EnemyTier, WorldDifficulty } from '@/shared/lib/types';
+import { WorldType, WorldImpact, StatImpact, CellType, EnemyTier, WorldDifficulty, BUILTIN_WORLD_TYPES } from '@/shared/lib/types';
+import { WorldDataRegistry } from '@/shared/lib/registry';
 
 // 重新导出 EnemyTier（从 types 导入）
 export type { EnemyTier } from '@/shared/lib/types';
 
 /**
- * 世界类型权威列表（唯一数据源）
- * 新增/删除世界类型只需修改此处
+ * 世界类型权威列表
+ *
+ * 从 WorldDataRegistry 获取已注册的世界类型。
+ * 不再硬编码——所有世界类型通过 Mod 加载。
  */
-export const WORLD_TYPES: WorldType[] = ['修仙', '高武', '科技', '魔幻', '异能', '仙侠', '武侠', '末世'];
+export function getWorldTypes(): WorldType[] {
+  return WorldDataRegistry.getInstance().getAllWorldTypes() as WorldType[];
+}
+
+/** @deprecated 使用 getWorldTypes() 替代 */
+export const WORLD_TYPES: WorldType[] = BUILTIN_WORLD_TYPES as unknown as WorldType[];
 
 // ============================================
 // 世界系数系统
@@ -136,7 +144,12 @@ export interface WorldStats {
 // 世界数据定义
 // ============================================
 
-export const WORLD_DATA: Record<WorldType, WorldStats> = {
+/**
+ * @deprecated 数据已迁移到 mods/wanjie-core/data/worlds.json。
+ * 请使用 getWorldData() 函数（内部从 WorldDataRegistry 读取）。
+ * 此常量仅为向后兼容保留，将在后续版本中移除。
+ */
+export const WORLD_DATA: Record<string, WorldStats> = {
   '修仙': {
     namePrefixes: ['青云', '紫霄', '太虚', '玄天', '昆仑', '蓬莱'],
     nameSuffixes: ['界', '域', '天', '境', '州'],
@@ -583,15 +596,52 @@ export type DifficultyLevel = keyof typeof DIFFICULTY_MULTIPLIERS;
 /**
  * 获取世界数据
  */
+// ============================================
+// 辅助函数（从注册中心读取）
+// ============================================
+
+/**
+ * 获取世界数据
+ *
+ * 所有数据通过 Mod 加载进入注册中心。
+ * 如果注册中心无数据，抛出明确错误提示用户检查 Mod 加载。
+ */
 export function getWorldData(worldType: WorldType): WorldStats {
-  return WORLD_DATA[worldType];
+  const registry = WorldDataRegistry.getInstance();
+  const data = registry.getWorldType(worldType);
+  if (!data) {
+    throw new Error(`世界数据未加载: "${worldType}"。请确保 wanjie-core Mod 已正确加载。`);
+  }
+  return {
+    namePrefixes: data.namePrefixes,
+    nameSuffixes: data.nameSuffixes,
+    descriptions: data.descriptions,
+    powerSystems: data.powerSystems ?? [],
+    majorForces: data.majorForces ?? [],
+    dangers: (data.dangers ?? []).map(d => ({ description: d.description, impact: d.impact as StatImpact, impactDescription: d.impactDescription })),
+    opportunities: (data.opportunities ?? []).map(o => ({ description: o.description, impact: o.impact as StatImpact, impactDescription: o.impactDescription })),
+    coefficient: data.baseCoefficient,
+    baseHp: 100,
+    hpPerLevel: 15,
+    hpPerConstitution: 10,
+    baseAttack: 12,
+    attackPerLevel: 2.0,
+    attackPerConstitution: 1.0,
+    attackPerSpiritRoot: 0.5,
+    baseDefense: 6,
+    defensePerLevel: 1.0,
+    defensePerWillpower: 0.8,
+    enemyAttackBonus: 0,
+    enemyDefenseBonus: 0,
+    statDisplayNames: {},
+  };
 }
 
 /**
  * 获取世界名称
  */
 export function getWorldName(worldType: WorldType): string {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   const prefix = data.namePrefixes[Math.floor(Math.random() * data.namePrefixes.length)];
   const suffix = data.nameSuffixes[Math.floor(Math.random() * data.nameSuffixes.length)];
   return prefix + suffix;
@@ -601,7 +651,7 @@ export function getWorldName(worldType: WorldType): string {
  * 获取世界描述
  */
 export function getWorldDescription(worldType: WorldType): string {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   return data.descriptions[Math.floor(Math.random() * data.descriptions.length)];
 }
 
@@ -609,23 +659,17 @@ export function getWorldDescription(worldType: WorldType): string {
  * 获取世界力量体系
  */
 export function getWorldPowerSystem(worldType: WorldType): string {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   return data.powerSystems[Math.floor(Math.random() * data.powerSystems.length)];
 }
 
-/**
- * 获取世界主要势力
- */
 export function getWorldMajorForces(worldType: WorldType): string {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   return data.majorForces[Math.floor(Math.random() * data.majorForces.length)];
 }
 
-/**
- * 获取世界危险设定
- */
 export function getWorldDangers(worldType: WorldType): WorldImpact {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   const danger = data.dangers[Math.floor(Math.random() * data.dangers.length)];
   return {
     description: danger.description,
@@ -634,11 +678,8 @@ export function getWorldDangers(worldType: WorldType): WorldImpact {
   };
 }
 
-/**
- * 获取世界机缘设定
- */
 export function getWorldOpportunities(worldType: WorldType): WorldImpact {
-  const data = WORLD_DATA[worldType];
+  const data = getWorldData(worldType);
   const opp = data.opportunities[Math.floor(Math.random() * data.opportunities.length)];
   return {
     description: opp.description,

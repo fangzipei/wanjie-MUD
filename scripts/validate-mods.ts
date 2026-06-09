@@ -64,6 +64,11 @@ function validateModManifest(data: Record<string, unknown>, modDir: string): Val
   errors.push(...checkRequiredString(data, 'author', p));
   errors.push(...checkRequiredString(data, 'gameVersion', p));
 
+  // required（可选布尔值）
+  if (data.required !== undefined && typeof data.required !== 'boolean') {
+    errors.push(`${p}.required: 必须为布尔值`);
+  }
+
   // contentTypes
   errors.push(...checkRequiredArray(data, 'contentTypes', p));
   if (Array.isArray(data.contentTypes)) {

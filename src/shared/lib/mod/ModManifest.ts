@@ -54,10 +54,25 @@ export interface ModManifest {
   gameVersion: string;
   /** 依赖的其他 Mod ID 列表 */
   dependencies: string[];
+  /** 是否强制加载，失败时阻止游戏启动（默认 false） */
+  required: boolean;
   /** 本 Mod 提供的内容类型 */
   contentTypes: ModContentType[];
   /** 内容类型到数据文件路径的映射 */
   dataFiles: Record<string, string>;
+}
+
+/** Mod 加载失败错误 */
+export class ModLoadError extends Error {
+  /** 失败的 Mod 列表 */
+  failedMods: Array<{ id: string; name: string; error: string }>;
+
+  constructor(failedMods: Array<{ id: string; name: string; error: string }>) {
+    const names = failedMods.map(m => `"${m.name || m.id}"`).join('、');
+    super(`Mod 加载失败: ${names}`);
+    this.name = 'ModLoadError';
+    this.failedMods = failedMods;
+  }
 }
 
 /** Mod 加载状态 */
@@ -222,6 +237,7 @@ export function parseManifest(json: string): { manifest?: ModManifest; errors: M
     author: m.author as string,
     gameVersion: m.gameVersion as string,
     dependencies: (m.dependencies as string[]) ?? [],
+    required: m.required === true,
     contentTypes: m.contentTypes as ModContentType[],
     dataFiles: (m.dataFiles as Record<string, string>) ?? {},
   };

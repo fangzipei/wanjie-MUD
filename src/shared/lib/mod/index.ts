@@ -10,6 +10,7 @@ export {
   validateManifest,
   parseManifest,
   ALL_MOD_CONTENT_TYPES,
+  ModLoadError,
 } from './ModManifest';
 
 export type {

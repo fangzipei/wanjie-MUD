@@ -20,7 +20,7 @@ import type {
   ModLoadCompleteEvent,
   LoadedMod,
 } from './ModManifest';
-import { parseManifest } from './ModManifest';
+import { parseManifest, ModLoadError } from './ModManifest';
 import {
   WorldDataRegistry,
 } from '@/shared/lib/registry/WorldDataRegistry';
@@ -133,7 +133,11 @@ export class ModLoader {
    *
    * 主入口方法。执行完整的 Mod 发现、校验、加载管线。
    *
+   * 强制 Mod（required: true）加载失败会抛出 ModLoadError。
+   * 非强制 Mod 失败会记录但不会阻塞。
+   *
    * @returns 加载结果摘要
+   * @throws {ModLoadError} 当强制 Mod 加载失败时
    */
   async loadAll(): Promise<ModLoadCompleteEvent> {
     if (this.loading) {
@@ -148,7 +152,7 @@ export class ModLoader {
       // 1. 发现 Mod
       const entries = await this.discoverMods();
       if (entries.length === 0) {
-        console.log('[ModLoader] 未发现 Mod，仅使用内置数据');
+        console.warn('[ModLoader] 未发现任何 Mod，游戏数据可能不完整');
         const event: ModLoadCompleteEvent = { loaded: 0, failed: 0, total: 0 };
         this.onComplete?.(event);
         return event;
@@ -157,6 +161,7 @@ export class ModLoader {
       const total = entries.length;
       let loaded = 0;
       let failed = 0;
+      const failedRequired: Array<{ id: string; name: string; error: string }> = [];
 
       // 2. 加载所有清单
       const manifests: Map<string, ModManifest> = new Map();
@@ -170,13 +175,37 @@ export class ModLoader {
         } catch (err) {
           failed++;
           const errorMsg = err instanceof Error ? err.message : '未知错误';
-          this.loadedMods.push({
-            manifest: { id: entry.id, name: entry.id, version: '?', description: '', author: '?', gameVersion: '?', dependencies: [], contentTypes: [], dataFiles: {} },
-            status: 'error',
-            error: errorMsg,
-          });
+          const placeholderManifest: ModManifest = {
+            id: entry.id, name: entry.id, version: '?', description: '', author: '?',
+            gameVersion: '?', dependencies: [], required: false, contentTypes: [], dataFiles: {},
+          };
+          this.loadedMods.push({ manifest: placeholderManifest, status: 'error', error: errorMsg });
+
+          // 检查是否为强制 Mod
+          // 加载失败时无法知道 required 字段，所以需要从 manifest 中预判断
+          // 实际上我们只能知道这是否是 wanjie-core（通过 id）
+          if (entry.id === 'wanjie-core') {
+            failedRequired.push({ id: entry.id, name: entry.id, error: errorMsg });
+          }
           console.error(`[ModLoader] 加载 Mod "${entry.id}" 失败:`, errorMsg);
         }
+      }
+
+      // 2.5 检查 manifest 中标记为 required 的 Mod 是否全部加载成功
+      for (const [, manifest] of manifests) {
+        if (manifest.required) {
+          const mod = this.loadedMods.find(m => m.manifest.id === manifest.id);
+          if (mod && mod.status === 'error') {
+            failedRequired.push({ id: manifest.id, name: manifest.name, error: mod.error ?? '未知错误' });
+          }
+        }
+      }
+
+      // 强制 Mod 失败 → 抛出致命错误
+      if (failedRequired.length > 0) {
+        const error = new ModLoadError(failedRequired);
+        this.onComplete?.({ loaded, failed, total });
+        throw error;
       }
 
       // 3. 解析依赖并按拓扑顺序加载数据
@@ -196,15 +225,26 @@ export class ModLoader {
         } catch (err) {
           const errorMsg = err instanceof Error ? err.message : '未知错误';
           console.error(`[ModLoader] 注册 Mod "${id}" 数据失败:`, errorMsg);
-          // 将 loaded 状态的 mod 标记为 error
           const mod = this.loadedMods.find(m => m.manifest.id === id);
           if (mod) {
             mod.status = 'error';
             mod.error = errorMsg;
           }
+
+          // 强制 Mod 数据注册失败也抛出
+          if (manifest.required) {
+            failedRequired.push({ id, name: manifest.name, error: errorMsg });
+          }
           loaded--;
           failed++;
         }
+      }
+
+      // 再次检查强制 Mod
+      if (failedRequired.length > 0) {
+        const error = new ModLoadError(failedRequired);
+        this.onComplete?.({ loaded, failed, total });
+        throw error;
       }
 
       const event: ModLoadCompleteEvent = { loaded, failed, total };
@@ -213,6 +253,17 @@ export class ModLoader {
     } finally {
       this.loading = false;
     }
+  }
+
+  /**
+   * 获取加载失败的 Mod 列表（含错误信息）
+   *
+   * @returns 失败的 Mod 列表
+   */
+  getFailedMods(): Array<{ id: string; name: string; error: string }> {
+    return this.loadedMods
+      .filter(m => m.status === 'error')
+      .map(m => ({ id: m.manifest.id, name: m.manifest.name, error: m.error ?? '未知错误' }));
   }
 
   /**

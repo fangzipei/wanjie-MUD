@@ -1,4 +1,5 @@
 import { GameProvider } from '@/views/game/useGameState';
+import { ModInitProvider } from '@/modules/mod/components/ModInitProvider';
 
 import type { Metadata } from 'next';
 
@@ -29,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="antialiased">
-        <GameProvider>{children}</GameProvider>
+        <ModInitProvider>
+          <GameProvider>{children}</GameProvider>
+        </ModInitProvider>
       </body>
     </html>
   );

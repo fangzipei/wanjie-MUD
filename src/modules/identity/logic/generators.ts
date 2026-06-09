@@ -1,9 +1,9 @@
 import { evaluateCharacter, evaluateCharacters } from './characterEvaluation';
 import { getTerminology } from '@/modules/narrative/logic/terminology';
 import {
-  WORLD_TRAIT_DEFINITIONS,
+  getTraitPoolFromRegistry,
 } from '../data/traits';
-import { WORLD_NAME_POOLS } from '../data/namePools';
+import { getNamePoolFromRegistry } from '../data/namePools';
 import {
   selectRandomTrait,
   generateImpactDescription,
@@ -11,11 +11,16 @@ import {
   QUALITY_CONFIG
 } from './traits';
 import { Character, World, CharacterStats, WorldType, ImpactfulTrait, ImpactLevel, StatImpact, WorldFaction } from '@/shared/lib/types';
+import { WorldDataRegistry } from '@/shared/lib/registry';
 import {
   generateWorldFactions,
   generateFactionDescription,
   generateFactionBackgroundDescription,
 } from '@/modules/faction/data/factionData';
+import {
+  getWorldTypes,
+  getWorldData,
+} from '../data/worldData';
 import {
   generateRealmSystem,
 } from '@/modules/progression/data/realmData';
@@ -150,11 +155,11 @@ export function generateCharacter(id: number, worldType: WorldType = '修仙'): 
   const gender = randomItem(['男', '女'] as const);
 
   // 使用世界对应的姓名池
-  const namePool = WORLD_NAME_POOLS[worldType];
+  const namePool = getNamePoolFromRegistry(worldType);
   const name = randomItem(namePool.surnames) + (gender === '男' ? randomItem(namePool.maleNames) : randomItem(namePool.femaleNames));
 
   // 使用世界对应的词条池
-  const traitPool = WORLD_TRAIT_DEFINITIONS[worldType];
+  const traitPool = getTraitPoolFromRegistry(worldType);
   const originResult = selectRandomTrait(traitPool.origin);
   const traitResult = selectRandomTrait(traitPool.trait);
   const personalityResult = selectRandomTrait(traitPool.personality);
@@ -235,8 +240,9 @@ export function getWorldTerms(worldType: WorldType) {
  * 生成单个世界（从 WORLD_DATA 读取所有配置）
  */
 export function generateWorld(id: number, ascensionCount: number = 0): World {
-  const type = WORLD_TYPES[id - 1] || randomItem(WORLD_TYPES);
-  const worldData = WORLD_DATA[type];
+  const allTypes = getWorldTypes();
+  const type = allTypes[id - 1] || randomItem(allTypes);
+  const worldData = getWorldData(type as WorldType);
   const name = randomItem(worldData.namePrefixes) + randomItem(worldData.nameSuffixes);
   const description = randomItem(worldData.descriptions);
 
@@ -283,10 +289,11 @@ export function generateWorld(id: number, ascensionCount: number = 0): World {
  */
 export function generateWorlds(ascensionCount: number = 0, rng: () => number = Math.random): World[] {
   // 打乱世界类型顺序
-  const shuffledTypes = [...WORLD_TYPES].sort(() => rng() - 0.5);
+  const allTypes = getWorldTypes();
+  const shuffledTypes = [...allTypes].sort(() => rng() - 0.5);
 
   return shuffledTypes.map((type, index) => {
-    const worldData = WORLD_DATA[type];
+    const worldData = getWorldData(type as WorldType);
     const name = randomItem(worldData.namePrefixes) + randomItem(worldData.nameSuffixes);
     const description = randomItem(worldData.descriptions);
 

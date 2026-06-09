@@ -205,6 +205,7 @@ function makeManifest(id: string, dependencies: string[]) {
     author: 'test',
     gameVersion: '>=1.0.0',
     dependencies,
+    required: false,
     contentTypes: ['world'] as import('./ModManifest').ModContentType[],
     dataFiles: {},
   };
