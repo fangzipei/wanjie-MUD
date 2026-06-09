@@ -1,5 +1,5 @@
 import { FragmentDropData, FragmentDropResult } from '@/modules/crafting/logic/fragmentSystem';
-import type { RealmSystem } from '../data/realmCore';
+import type { RealmSystem } from '@/modules/progression/data/realmCore';
 
 // 重新导出难度级别类型
 export type { DifficultyLevel } from '@/modules/identity/data/worldData';
@@ -592,7 +592,7 @@ export interface Protagonist {
   worldVisitHistory?: import('./typesExtension').WorldVisitRecord[]; // 世界访问历史
   ascensionHistory?: import('./typesExtension').AscensionRecord[]; // 飞升历史记录
   // 残本/残片系统
-  fragmentInventory?: import('@/modules/equipment/hooks/fragmentSystem').FragmentInventory; // 残本/残片库存
+  fragmentInventory?: import('@/modules/crafting/logic/fragmentSystem').FragmentInventory; // 残本/残片库存
   // 爬塔系统
   towerProgress?: import('@/modules/tower/logic/types').TowerProgress; // 爬塔进度
 }
@@ -642,17 +642,17 @@ export interface Technique {
   baseMpCost: number; // 基础法力消耗
   
   // ========== 元素属性 ==========
-  element: import('@/modules/equipment/hooks/restraintSystem').Element; // 主元素属性（必有）
-  subElement?: import('@/modules/equipment/hooks/restraintSystem').Element; // 副元素属性（稀有及以上可能拥有）
+  element: import('@/modules/combat/logic/restraintSystem').Element; // 主元素属性（必有）
+  subElement?: import('@/modules/combat/logic/restraintSystem').Element; // 副元素属性（稀有及以上可能拥有）
   
   // ========== 武器契合 ==========
-  compatibleWeapon: import('@/modules/equipment/hooks/restraintSystem').WeaponCategory | null; // 契合武器类型
+  compatibleWeapon: import('@/modules/combat/logic/restraintSystem').WeaponCategory | null; // 契合武器类型
   compatibleBonus: number; // 契合加成百分比
   
   // ========== 法技系统 ==========
   skillSlots: number; // 已解锁的技能槽位数量
   maxSkillSlots: number; // 最大技能槽位数量
-  allSkills: import('./skill/skillTypes').TechniqueSkill[]; // 全部可解锁技能
+  allSkills: import('@/modules/techniques/logic/skillTypes').TechniqueSkill[]; // 全部可解锁技能
   equippedSkills: (string | null)[]; // 当前装备的技能ID列表（按槽位顺序，null表示空槽）
   
   // ========== 来源信息 ==========
@@ -710,11 +710,11 @@ export interface Equipment {
   maxLevel: number; // 最大等级（按稀有度：普通5/稀有7/史诗8/传说9/神话10）
   
   // ========== 武器类型 ==========
-  weaponCategory: import('@/modules/equipment/hooks/restraintSystem').WeaponCategory | null; // 武器类别（仅武器类装备有）
+  weaponCategory: import('@/modules/combat/logic/restraintSystem').WeaponCategory | null; // 武器类别（仅武器类装备有）
   
   // ========== 元素契合 ==========
-  element: import('@/modules/equipment/hooks/restraintSystem').Element | null; // 主元素属性
-  compatibleElement: import('@/modules/equipment/hooks/restraintSystem').Element | null; // 契合元素类型
+  element: import('@/modules/combat/logic/restraintSystem').Element | null; // 主元素属性
+  compatibleElement: import('@/modules/combat/logic/restraintSystem').Element | null; // 契合元素类型
   compatibleBonus: number; // 契合加成百分比
   
   // ========== 基础数值 ==========
@@ -725,7 +725,7 @@ export interface Equipment {
   // ========== 斗技系统 ==========
   techniqueSlots: number; // 已解锁的技巧槽位数量
   maxTechniqueSlots: number; // 最大技巧槽位数量
-  allTechniques: import('./skill/skillTypes').WeaponTechnique[]; // 全部可解锁技巧
+  allTechniques: import('@/modules/techniques/logic/skillTypes').WeaponTechnique[]; // 全部可解锁技巧
   equippedTechniques: (string | null)[]; // 当前装备的技巧ID列表
   
   // ========== 来源信息 ==========
@@ -740,12 +740,12 @@ export interface Equipment {
   // ========== 兼容字段（旧代码过渡用，后续可删除） ==========
   enhancement?: number; // 强化等级（旧系统）
   refinement?: number; // 重铸次数（旧系统）
-  affixes?: import('../data/equipmentAffixData').EquipmentAffix[]; // 词缀列表（旧系统）
+  affixes?: import('@/modules/equipment/data/equipmentAffixData').EquipmentAffix[]; // 词缀列表（旧系统）
   setId?: string | null; // 套装ID（旧系统）
 }
 
 // 装备词缀 - 重新导出以保持类型一致
-export type { EquipmentAffix, AffixType, AffixEffect } from '../data/equipmentAffixData';
+export type { EquipmentAffix, AffixType, AffixEffect } from '@/modules/equipment/data/equipmentAffixData';
 
 // 升级系统类型
 export type UpgradeableItemType = 'technique' | 'equipment';

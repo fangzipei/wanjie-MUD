@@ -25,7 +25,7 @@ import { CultivationPathSelect } from '@/modules/progression/components/Cultivat
 import { SeclusionPanel } from '@/modules/progression/components/SeclusionPanel';
 import { FactionPanel } from '@/modules/faction/components/FactionPanel';
 import { InventoryPanel } from '@/modules/equipment/components/InventoryPanel';
-import { TechniqueSkillPanel as SkillsTab } from '@/modules/techniques/components/SkillManagePanel';
+import { SkillsTab } from '@/modules/techniques/components/SkillsTab';
 import { TechniquePanel } from '@/modules/techniques/components/TechniquePanel';
 import { EquipmentPanel } from '@/modules/equipment/components/EquipmentPanel';
 import { ShopPanel } from '@/modules/economy/components/ShopPanel';
@@ -51,7 +51,7 @@ import { BattleDialog } from '@/modules/combat/components/BattleDialog';
 import { CharacterInfoInline } from '@/shared/components/CharacterInfo';
 import { GameHeader } from '@/shared/components/Header';
 import { AdventureLootPanel } from '@/shared/components/AdventureLootPanel';
-import { DeveloperPanel } from './DeveloperPanel';
+import { DeveloperPanel } from '@/shared/components/DeveloperPanel';
 import { CriticalHealthOverlay } from '@/shared/components/CriticalHealthOverlay';
 import { DeathDialog } from '@/shared/components/DeathDialog';
 

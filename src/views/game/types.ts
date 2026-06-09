@@ -24,7 +24,7 @@ import type {
   NewWorldInfo,
 } from '@/shared/lib/typesExtension';
 import type { SeclusionType } from '@/modules/progression/logic/seclusion';
-import type { TowerEnemy } from '@/lib/game/tower/types';
+import type { TowerEnemy } from '@/modules/tower/logic/types';
 
 /** 游戏上下文接口 */
 export interface GameContextType {

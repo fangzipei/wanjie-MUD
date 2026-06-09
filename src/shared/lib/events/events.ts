@@ -9,10 +9,10 @@
  * 数据文件：src/lib/game/data/events.ts
  */
 
-import { getEventExpReward } from '../utils/balanceConfig';
-import { getWorldTerms } from '../utils/generators';
-import { getItemById, cultivationPillItems, materialItems } from '../utils/items';
-import { AdventureEvent, WorldType, InventoryItem, createInventoryItem } from '../types';
+import { getEventExpReward } from '@/modules/progression/logic/balanceConfig';
+import { getWorldTerms } from '@/modules/identity/logic/generators';
+import { getItemById, cultivationPillItems, materialItems } from '@/modules/equipment/logic/items';
+import { AdventureEvent, WorldType, InventoryItem, createInventoryItem } from '@/shared/lib/types';
 import {
   SAFE_EVENTS,
   RISKY_EVENTS,
@@ -20,7 +20,7 @@ import {
   BATTLE_EVENTS,
   ALL_EVENTS,
   EventRisk
-} from '../../data/events';
+} from '@/modules/exploration/data/events';
 
 const randomItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 

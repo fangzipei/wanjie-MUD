@@ -58,12 +58,12 @@ function getRestraintDisplay(technique: Technique): { elementBadges: React.React
             className="text-[9px] px-1 py-0 h-4 bg-purple-500/10 border-purple-400 text-purple-600 dark:text-purple-400 cursor-help flex items-center gap-0.5"
           >
             <span>{icon}</span>
-            {ELEMENT_NAMES[technique.element]}
+            {ELEMENT_NAMES[technique.element as Element]}
           </Badge>
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-xs">
           <div className="space-y-1">
-            <div className="text-xs font-medium">{icon}{ELEMENT_NAMES[technique.element]}属性</div>
+            <div className="text-xs font-medium">{icon}{ELEMENT_NAMES[technique.element as Element]}属性</div>
             {hint.counters.length > 0 && (
               <div className="text-[10px] text-green-500">✦ 克制：{hint.counters.join('、')}</div>
             )}
@@ -151,19 +151,19 @@ function TechniqueSlotCard({
       element={technique.element ? (
         <span className="flex items-center gap-1">
           {getElementIcon(technique.element)}
-          <span>{ELEMENT_NAMES[technique.element]}</span>
+          <span>{ELEMENT_NAMES[technique.element as Element]}</span>
         </span>
       ) : undefined}
       compatibleWeapon={technique.compatibleWeapon ? {
-        name: WEAPON_CATEGORY_NAMES[technique.compatibleWeapon],
+        name: WEAPON_CATEGORY_NAMES[technique.compatibleWeapon as WeaponCategory],
         bonus: technique.compatibleBonus,
         element: (
           <span className="flex items-center gap-0.5">
-            {getElementIcon(WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon])}
-            <span>{ELEMENT_NAMES[WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon]]}</span>
+            {getElementIcon(WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon as WeaponCategory])}
+            <span>{ELEMENT_NAMES[WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon as WeaponCategory]]}</span>
           </span>
         ),
-        compatibleTechnique: WEAPON_CATEGORY_COMPATIBLE_TECHNIQUE[technique.compatibleWeapon],
+        compatibleTechnique: WEAPON_CATEGORY_COMPATIBLE_TECHNIQUE[technique.compatibleWeapon as WeaponCategory],
       } : undefined}
       skillSlots={{
         current: technique.skillSlots,
@@ -241,19 +241,19 @@ function TechniqueItem({
       element={technique.element ? (
         <span className="flex items-center gap-1">
           {getElementIcon(technique.element)}
-          <span>{ELEMENT_NAMES[technique.element]}</span>
+          <span>{ELEMENT_NAMES[technique.element as Element]}</span>
         </span>
       ) : undefined}
       compatibleWeapon={technique.compatibleWeapon ? {
-        name: WEAPON_CATEGORY_NAMES[technique.compatibleWeapon],
+        name: WEAPON_CATEGORY_NAMES[technique.compatibleWeapon as WeaponCategory],
         bonus: technique.compatibleBonus,
         element: (
           <span className="flex items-center gap-0.5">
-            {getElementIcon(WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon])}
-            <span>{ELEMENT_NAMES[WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon]]}</span>
+            {getElementIcon(WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon as WeaponCategory])}
+            <span>{ELEMENT_NAMES[WEAPON_CATEGORY_DEFAULT_ELEMENT[technique.compatibleWeapon as WeaponCategory]]}</span>
           </span>
         ),
-        compatibleTechnique: WEAPON_CATEGORY_COMPATIBLE_TECHNIQUE[technique.compatibleWeapon],
+        compatibleTechnique: WEAPON_CATEGORY_COMPATIBLE_TECHNIQUE[technique.compatibleWeapon as WeaponCategory],
       } : undefined}
       skillSlots={{
         current: technique.skillSlots,
@@ -320,7 +320,7 @@ export function TechniquePanel({
   };
 
   // 筛选未装备的功法
-  const unfilteredBackpack = techniques.filter(t => !isEquipped(t));
+  const unfilteredBackpack = techniques.filter((t: Technique) => !isEquipped(t));
   
   // 排序和筛选状态
   const [sortBy, setSortBy] = useState<'level' | 'power' | 'rarity'>('level');
@@ -333,17 +333,17 @@ export function TechniquePanel({
     
     // 类型筛选
     if (filterType !== 'all') {
-      result = result.filter(t => t.type === filterType);
+      result = result.filter((t: Technique) => t.type === filterType);
     }
     
     // 稀有度筛选
     if (filterRarity !== 'all') {
-      result = result.filter(t => t.rarity === filterRarity);
+      result = result.filter((t: Technique) => t.rarity === filterRarity);
     }
     
     // 排序
     const rarityOrder = ['普通', '稀有', '史诗', '传说'];
-    result = [...result].sort((a, b) => {
+    result = [...result].sort((a: Technique, b: Technique) => {
       switch (sortBy) {
         case 'level':
           return b.level - a.level;
@@ -482,7 +482,7 @@ export function TechniquePanel({
             <EmptyBackpackHint message={unfilteredBackpack.length > 0 ? "无匹配功法" : "暂无功法"} />
           ) : (
             <div className="grid grid-cols-2 gap-1.5">
-              {backpack.map(technique => (
+              {backpack.map((technique: Technique) => (
                 <TechniqueItem
                   key={technique.id}
                   technique={technique}

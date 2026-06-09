@@ -64,11 +64,11 @@ export interface WSMessage<T = unknown> {
 export interface WSAuthPayload {
   playerId: string;
   playerName: string;
-  worldType?: import('@/types/multiplayer').PlayerOnlineState['worldType'];
+  worldType?: import('@/modules/social/multiplayerTypes').PlayerOnlineState['worldType'];
   level?: number;
   realm?: string;
   combatPower?: number;
-  statistics?: import('@/types/multiplayer').PlayerStatistics;
+  statistics?: import('@/modules/social/multiplayerTypes').PlayerStatistics;
 }
 
 /** 认证成功响应载荷 */

@@ -15,7 +15,7 @@ import { calculatePlayerMaxHp, calculatePlayerMaxMp } from '@/modules/progressio
 import { calculatePlayerCombatPower } from '@/modules/combat/logic/combatPower';
 import { executeCultivation, getMaxExperience } from '@/modules/progression/logic/cultivation';
 import { generateEquipment } from '@/modules/equipment/logic/equipment';
-import { updateTaskProgress, applyMentalChange } from '@/modules/progression/logic/expansionLogic';
+import { updateTaskProgress, applyMentalChange } from '@/shared/lib/expansionLogic';
 import { processExperienceGain, calculateBreakthroughTransfer } from '@/modules/progression/logic/experienceSystem';
 import { generateCharacters, generateWorlds, generateBackstory } from '@/modules/identity/logic/generators';
 import type { SeclusionType } from '@/modules/progression/logic/seclusion';
@@ -128,7 +128,7 @@ import { calculatePillEffect, getPillRealmLevel } from '@/modules/progression/lo
 import { createMinimalEquipment, createMinimalTechnique } from '@/modules/equipment/logic/rarityUtils';
 import { createInitialGameState } from './initialState';
 
-import type { GameContextType } from './game-state/types';
+import type { GameContextType } from './types';
 const GameContext = createContext<GameContextType | null>(null);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {

@@ -4,7 +4,7 @@
  * 整合修炼流派、功法羁绊、装备词缀、势力进度等系统的计算逻辑
  */
 
-import { CharacterStats, ItemRarity, WorldType, EquipmentSlot, getFinalStats, LegacyStats, GrowthStats } from '../types';
+import { CharacterStats, ItemRarity, WorldType, EquipmentSlot, getFinalStats, LegacyStats, GrowthStats } from '@/shared/lib/types';
 import { 
   CultivationPath,
   CultivationPathProgress,

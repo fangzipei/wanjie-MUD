@@ -6,7 +6,7 @@
 import { achievementSystem, AchievementConfig } from '@/modules/collection/logic/achievement/achievementSystem';
 import { collectionSystem, BondConfig } from '@/modules/collection/logic/collectionSystem';
 import { gameEventManager, GameEventType, EventPayloadMap, triggerEvent } from '@/shared/lib/events/eventManager';
-import { GameStatistics, Technique, Equipment } from '../types';
+import { GameStatistics, Technique, Equipment } from '@/shared/lib/types';
 
 // ============================================
 // 内联配置（避免异步加载）

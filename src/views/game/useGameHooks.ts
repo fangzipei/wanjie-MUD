@@ -254,7 +254,7 @@ export function useInventory() {
   
   // 获取灵石数量
   const spiritStoneCount = useMemo(() => {
-    const item = inventory.find(i => i.definition.id === 'spirit_stone');
+    const item = inventory.find((i: InventoryItem) => i.definition.id === 'spirit_stone');
     return item ? item.quantity : 0;
   }, [inventory]);
   
@@ -262,9 +262,9 @@ export function useInventory() {
   const itemsByType = useMemo(() => {
     return {
       all: inventory,
-      丹药: inventory.filter(i => i.definition.type === '丹药'),
-      材料: inventory.filter(i => i.definition.type === '材料'),
-      其他: inventory.filter(i => !['丹药', '材料', '灵石'].includes(i.definition.type)),
+      丹药: inventory.filter((i: InventoryItem) => i.definition.type === '丹药'),
+      材料: inventory.filter((i: InventoryItem) => i.definition.type === '材料'),
+      其他: inventory.filter((i: InventoryItem) => !['丹药', '材料', '灵石'].includes(i.definition.type)),
     };
   }, [inventory]);
   
@@ -288,8 +288,8 @@ export function useTechniques() {
     if (!protagonist) return { techniques: [], equippedAttackTechniques: [null, null, null], equippedDefenseTechniques: [null, null, null], equipTechnique, unequipTechnique };
     
     const techniques = protagonist.techniques || [];
-    const attackTechniques = techniques.filter(t => t.type === 'attack');
-    const defenseTechniques = techniques.filter(t => t.type === 'defense');
+    const attackTechniques = techniques.filter((t: Technique) => t.type === 'attack');
+    const defenseTechniques = techniques.filter((t: Technique) => t.type === 'defense');
     
     // 安全处理功法槽位数组（修复 BUG-007: 数组越界）
     // 确保数组长度至少为 3，不足的位置用 null 填充

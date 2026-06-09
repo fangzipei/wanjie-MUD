@@ -27,8 +27,8 @@ import {
 } from '@/shared/ui/sheet';
 import { Switch } from '@/shared/ui/switch';
 import { ControlledTabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
-import { EQUIPMENT_NAMES } from '@/lib/data/equipment';
-import { TECHNIQUE_NAMES, RARITY_POWER_RANGE, RARITY_BONUS_RANGE } from '@/lib/data/techniques';
+import { EQUIPMENT_NAMES } from '@/modules/equipment/data/equipment';
+import { TECHNIQUE_NAMES, RARITY_POWER_RANGE, RARITY_BONUS_RANGE } from '@/modules/techniques/data/techniques';
 import { Protagonist, CultivationPath, WorldType, ItemRarity, TechniqueType, EquipmentSlot } from '@/shared/lib/types';
 
 interface DeveloperPanelProps {

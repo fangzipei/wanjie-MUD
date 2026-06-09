@@ -6,7 +6,7 @@
  */
 
 import type { EventRecord, EventPrerequisite, Consequence } from './types';
-import type { GameState } from '../types';
+import type { GameState } from '@/shared/lib/types';
 
 // ============================================
 // 前置条件检查

@@ -10,7 +10,7 @@
  * - 读取：优先从 IndexedDB 读取，不足时从 Supabase 分页获取
  */
 
-import { MessageRecord, MESSAGE_CONFIG } from '../types';
+import { MessageRecord, MESSAGE_CONFIG } from '@/shared/lib/types';
 
 // IndexedDB 配置
 const DB_NAME = 'wanjie_messages_db';
