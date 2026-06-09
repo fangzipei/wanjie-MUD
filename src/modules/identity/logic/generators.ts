@@ -243,7 +243,6 @@ export const WORLD_SEED_LENGTH = 8;
  * 生成固定长度的随机字符串种子
  * 由字母和数字组成，无意义，仅用于 createRng 的确定性生成。
  */
-<<<<<<< HEAD
 export function generateWorldSeed(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -268,14 +267,6 @@ export function generateWorld(seed: string = '', ascensionCount: number = 0): Wo
   const worldData = WORLD_DATA[type];
   const name = randomItem(worldData.namePrefixes, rng) + randomItem(worldData.nameSuffixes, rng);
   const description = randomItem(worldData.descriptions, rng);
-=======
-export function generateWorld(id: number, ascensionCount: number = 0): World {
-  const allTypes = getWorldTypes();
-  const type = allTypes[id - 1] || randomItem(allTypes);
-  const worldData = getWorldData(type as WorldType);
-  const name = randomItem(worldData.namePrefixes) + randomItem(worldData.nameSuffixes);
-  const description = randomItem(worldData.descriptions);
->>>>>>> 4dffb39107edbdf9c4a2a3cad016d39d295e96b1
 
   // 生成境界系统
   const realmSystem = generateRealmSystem(type);
@@ -325,58 +316,8 @@ export const DEFAULT_WORLD_SEEDS: readonly string[] = ['a0b1c2d3', 'e4f5g6h7', '
  * @param ascensionCount - 飞升次数（影响难度系数）
  * @returns 生成的世界列表
  */
-<<<<<<< HEAD
 export function generateWorlds(seeds: string[] = [...DEFAULT_WORLD_SEEDS], ascensionCount: number = 0): World[] {
   return seeds.map(seed => generateWorld(seed, ascensionCount));
-=======
-export function generateWorlds(ascensionCount: number = 0, rng: () => number = Math.random): World[] {
-  // 打乱世界类型顺序
-  const allTypes = getWorldTypes();
-  const shuffledTypes = [...allTypes].sort(() => rng() - 0.5);
-
-  return shuffledTypes.map((type, index) => {
-    const worldData = getWorldData(type as WorldType);
-    const name = randomItem(worldData.namePrefixes) + randomItem(worldData.nameSuffixes);
-    const description = randomItem(worldData.descriptions);
-
-    // 生成境界系统
-    const realmSystem = generateRealmSystem(type);
-    const powerSystem = getPowerSystemDescription(realmSystem);
-
-    // 生成势力列表
-    const factions = generateWorldFactions(type);
-    const majorForces = generateFactionDescription(type, factions);
-
-    // 计算难度系数
-    const baseCoefficient = getWorldBaseCoefficient(type);
-    const actualCoefficient = calculateWorldDifficultyCoefficient(baseCoefficient, ascensionCount);
-    const difficulty = getWorldDifficultyFromCoefficient(actualCoefficient);
-
-    // 生成危险和机缘
-    const dangers = generateWorldDangers(type, actualCoefficient);
-    const opportunities = generateWorldOpportunities(type, actualCoefficient, dangers);
-
-    // 计算奖励系数
-    const rewardCoefficient = calculateWorldRewardCoefficient(actualCoefficient);
-
-    return {
-      id: index + 1,
-      name,
-      type,
-      description,
-      powerSystem,
-      realmSystem,
-      majorForces,
-      factions,
-      baseCoefficient,
-      actualCoefficient,
-      difficulty,
-      dangers,
-      opportunities,
-      rewardCoefficient,
-    };
-  });
->>>>>>> 4dffb39107edbdf9c4a2a3cad016d39d295e96b1
 }
 
 /**
